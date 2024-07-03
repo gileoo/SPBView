@@ -9,4 +9,4 @@ It provides a dedicated UI gathers an overview of the whole experiment run of bl
 
 Planed related reference publication:
 
-Ritter M., Hoffmann A., Rauch N., Sachse P., Djamshidian A., Harders M., Ellmerer Ph. (2024), SPBView: An Extendable Data Analysis and Combined Visualization Tool for Saccadic Eye-Movement, Pupil Size, and Blink Detection, Elseviere Software X, doi:XXXX (under review).
+Ritter M., Hoffmann A., Rauch N., Sachse P., Djamshidian A., Harders M., Ellmerer Ph. (2024), SPBView: An Extendable Data Analysis and Combined Visualization Tool for Saccadic Eye-Movement, Pupil Size, and Blink Detection, Elseviere Software X, doi:XXXX (in progress).
