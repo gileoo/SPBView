@@ -7,6 +7,6 @@ It was developed to execute clinical and psychological experiments.
 
 It provides a dedicated UI gathers an overview of the whole experiment run of blinks and target events. Target can be selected for details inspection. Reaction time, error to the gaze target, pro/anti-saccadic intervals, pupil size, as well as configurable labels are shown for evaluation. The reaction time can be correction manually as well as target classified. Target and blink event can then be exported as table for further statistical analysis. 
 
-Related reference publication:
+Planed related reference publication:
 
 Ritter M., Hoffmann A., Rauch N., Sachse P., Djamshidian A., Harders M., Ellmerer Ph. (2024), SPBView: An Extendable Data Analysis and Combined Visualization Tool for Saccadic Eye-Movement, Pupil Size, and Blink Detection, Elseviere Software X, doi:XXXX (under review).
