@@ -1,0 +1,15 @@
+source https://www.nuget.org/api/v2/
+
+nuget FSharp.Core ~> 4.0.0 redirects: force 
+nuget FSharp.Data
+nuget OxyPlot.WindowsForms ~> 1.0
+nuget EPPlus ~> 4.1.1
+nuget Accord.Math
+nuget Accord.Statistics
+
+http http://marcel-ritter.com/wp-content/EyeTracker/Data001.zip Data001.zip
+
+group Build
+	source https://www.nuget.org/api/v2/
+
+	nuget FAKE
