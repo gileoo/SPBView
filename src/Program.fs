@@ -223,7 +223,7 @@ let main argv =
             ColumnCount = 1
         )
 
-    use textAbout = new  Label( Text = "\n\n SPB View assists in saccadic eye tracking data evaluation. \n\n (c) 2024, v 0.1.0\n\n Please the URL below for more information:", Dock = DockStyle.Fill, AutoSize = true )
+    use textAbout = new  Label( Text = "\n\n SPB View assists in saccadic eye tracking data evaluation. \n\n (c) 2024, v 0.1.0\n\n Please visit the URL below for more information:", Dock = DockStyle.Fill, AutoSize = true )
 
     use linkAbout = new LinkLabel(Text=" https://github.com/gileoo/SPBView ", Dock = DockStyle.Fill, AutoSize = true)
     linkAbout.Click.Add( fun e -> 
