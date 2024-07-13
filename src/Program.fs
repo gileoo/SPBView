@@ -78,14 +78,14 @@ let main argv =
 
     use win =
         new Form(
-            Text = "SPBView",
+            Text = "SPBView v0.1.0",
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable,
             ClientSize = gazePlotView.Size + Drawing.Size( 0, 100 ),
             ShowIcon = false )
 
     use aboutWin =
         new Form(
-            Text = "SPBView-About",
+            Text = "About SPBView",
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable,
             ClientSize = Drawing.Size( 320, 170 ),
             ShowIcon = false )
@@ -223,7 +223,7 @@ let main argv =
             ColumnCount = 1
         )
 
-    use textAbout = new  Label( Text = "\n\n SPB View assists in saccadic eye tracking data evaluation. \n\n (c) 2024, v 0.1.0\n\n Please visit the URL below for more information:", Dock = DockStyle.Fill, AutoSize = true )
+    use textAbout = new  Label( Text = "\n\n SPBView assists in saccadic eye tracking data evaluation. \n\n (c) 2024, v 0.1.0\n\n Please visit the URL below for more information:", Dock = DockStyle.Fill, AutoSize = true )
 
     use linkAbout = new LinkLabel(Text=" https://github.com/gileoo/SPBView ", Dock = DockStyle.Fill, AutoSize = true)
     linkAbout.Click.Add( fun e -> 
