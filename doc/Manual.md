@@ -5,6 +5,9 @@ Please get in touch, if the information is not sufficient or you encounter any o
 ## A) Configuration
 
 For now, some configurations have to be done in config files before an experiment can be analyzed.
+* InputData.conf (A.1, A.2)
+* ExperimentSetup.conf (A.3)
+* EyeTargets.conf (A.4)
 
 ### A.1) Data Column Names
 
