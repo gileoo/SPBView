@@ -11,7 +11,7 @@ let cfgPath =
         Uri(System.Reflection.Assembly.GetExecutingAssembly()
         .EscapedCodeBase ).AbsolutePath )
 
-let fileNameIni = "EyeTracker.ini"
+let fileNameIni = "SPBView.ini"
 let fileNameExpSetup = "ExperimentSetup.conf"
 let fileNameInputData = "InputData.conf"
 let fileNameEyeTargets = "EyeTargets.conf"
@@ -174,8 +174,13 @@ let readIniFile() =
     
     with
     | :? FileNotFoundException -> 
-        printfn "no in file found, using defaults"
+        printfn "no SPBView.ini file found, using defaults"
         // failwith (sprintf "file not found: %s" filePathIni)
+    
+    if plotConfig.Length = 0 then
+        plotConfig <- plotConfig @ ["Speed"]
+        plotConfig <- plotConfig @ ["XError"]
+        plotConfig <- plotConfig @ ["Intervals"]
 
     {   OpenPath = openPath
         SavePath = savePath

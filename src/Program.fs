@@ -274,6 +274,7 @@ let main argv =
                     | Some s -> 
                         s.PlotConfig
                         |> List.iter( printfn "%s") 
+                        UpdateView.stateDo (UpdateView.updateGaze gazePlotFigure gazePlotView)
                     | None -> () )
             tmp
 

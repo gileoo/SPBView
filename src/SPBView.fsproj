@@ -8,7 +8,7 @@
     <ProjectGuid>89f1250f-7d6a-41d3-9723-b335c8ad7ea2</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>EyeTracker</RootNamespace>
-    <AssemblyName>EyeTracker</AssemblyName>
+    <AssemblyName>SPBView</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
