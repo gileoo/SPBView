@@ -71,7 +71,7 @@ type labelStates =
 //    returns an array of EyesSnapshots, a count of invalid lines, 
 //    and an array of target-file names
 
-let private getFileAsArray (file:CsvFile) =
+let private getFileAsArrayMediaChange (file:CsvFile) =
     let mutable countInvalids = 0
     let mutable media = Map.empty
 
@@ -182,7 +182,7 @@ let private getFileAsArray (file:CsvFile) =
 //    generates and fills the eye tracking data types
 //    returns an array of EyesSnapshots, a count of invalid lines, 
 //    and an array of target-file names
-let private getFileAsArrayPsy (file:CsvFile) =
+let private getFileAsArrayTimedLabels (file:CsvFile) =
     let mutable countInvalids = 0
     let mutable media = Map.empty
 
@@ -423,7 +423,6 @@ let private loadTargets (uri:string) =
             sprintf "EyeTargets.conf missing! Please place at: %s " uri ) |> ignore
         Array.empty
 
-
 // -- helper function to create a session record
 let private makeSession  
     (path:string) 
@@ -564,8 +563,16 @@ let getSession (uri:string) (targetUri:string) (* statesUri *) =
     if GlobalCfg.InputData.ColsNamesCSV.Count = 0  then failwith "No config loaded"
         
     let tsvFile = CsvFile.Load( uri ) 
-    let data, inv, media, _, moods = getFileAsArrayPsy tsvFile    // hardoced for now   
-    //  let data, inv, media, _, moods = getFileAsArray tsvFile     // hardoced for now
+
+    let noControlLabels = 
+        GlobalCfg.InputData.StateExperiment.IsEmpty &&
+        GlobalCfg.InputData.StateTarget.IsEmpty
+
+    let data, inv, media, _, moods = 
+        if noControlLabels then 
+            getFileAsArrayMediaChange tsvFile
+        else
+            getFileAsArrayTimedLabels tsvFile   
 
     let name = System.IO.Path.GetFileName uri
     
