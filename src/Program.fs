@@ -227,7 +227,7 @@ let main argv =
 
     use linkAbout = new LinkLabel(Text=" https://github.com/gileoo/SPBView ", Dock = DockStyle.Fill, AutoSize = true)
     linkAbout.Click.Add( fun e -> 
-        (System.Diagnostics.Process.Start("https://github.com/gileoo/SPBView") |> ignore) )
+        System.Diagnostics.Process.Start("https://github.com/gileoo/SPBView") |> ignore )
 
     use buttonAbout = new Button( Text = "Ok", TextAlign = ContentAlignment.MiddleCenter, Dock=DockStyle.Right )
     buttonAbout.Click.Add( fun e -> aboutWin.Hide() )
@@ -393,7 +393,9 @@ let main argv =
             |]
 
             sub "Help" [|
-                action "About" Sc.CtrlShiftA (fun () -> 
+                action "User Manual"  Sc.CtrlShiftM (fun _ -> 
+                    System.Diagnostics.Process.Start("https://github.com/gileoo/SPBView/blob/master/doc/Manual.md") |> ignore )
+                action "About" Sc.CtrlShiftA (fun _ -> 
                     aboutWin.Show();
                     )
             |]

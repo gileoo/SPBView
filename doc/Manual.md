@@ -1,5 +1,7 @@
 # User Manual
 
+Please get in touch, if the information is not sufficient or you encounter any other problem.
+
 ## I) Configuration
 
 For now, some configurations have to be done in config files before an experiment can be analyzed.
@@ -58,6 +60,42 @@ post	960	540	30
 
 ### 1) Visualize and Verify Data
 
+<img width="874" alt="SPBView" src="https://github.com/gileoo/SPBView/assets/17740998/e1d3dd0d-e5b6-47a3-9586-5dc1f9679847">
+
+SPBView provides the above interactive visualization to verify and correct saccadic data. The horizontal error of the gaze point is drawn as a blue line, the vertical as orange line. Eye movements are categorized in fixation (green), pro-saccadic (yellow), and anti-saccadic (blue) movement intervals. The duration of the interval is shown. The grey/black bar plot illustrates the speed of the movement. The reaction time is shown by the black bars of the speed plot.
+
+The axes can be adjusted using the mouse wheel; also separated for each axis when hovering over the specific axis. For panning hold down the right mouse button.
+
+Navigating to targets can be executed by keypresses, e.g.: _space_ (next) and _backspace_ (previous). Note, that the focus has to be on the gaze plot (may need a mouse click in that area before). The next/pervious actions take the _Filter_ field into account. This is a space separated white list of substrings of target names to be shown;
+e.g. 'Left Right' will enable a filter that target navigation is limited to those targets having 'Left' or 'Right' in its name (case sensitive). More navigation commands and hotkeys can be found in the __Target__ section of the main menu.
+
+Alternatively, the panel with the colored small rectangles on top of the gaze plot can be used by mouse clicks. Each rectangle related to one split target interval. The actually shown target is colored in black. This is useful to quickly jump over longer time intervals of the data. Note, that when holding down the _shift_ key, the rectangular visualization is warped, such that small rectangles are enlarged under the current mouse position.
+
+On top of the target navigation view the blink view shows all blink events as black interval and black to white colormapped circle. The vertical position and color of the circle indicates the length of the blink. The higher and whiter the longer. The circle can be clicked on to show details. 
+
+The __reaction time__ detection can be altered by adjusting the _SplitThrs_ value (split threshold, default 0.3). If increased the time position of fixation and saccade start will be shifted backwards in time, as a looser threshold will trigger the split. This might be helpful to adjust for more jittered data. 
+
+If the reaction time is detected wrongly, it can be adjusted manually by holding the _alt_ key and dragging along the horizontal limits in the gaze plot; E.g. press&hold alt, click at the very left of the target view and move to the time value of the start of the saccade and release. The black bars recolor accordingly, and the hole frame will be marked light blue, such that manual corrections become immediately visible; see image below. Here, the reaction time was extended to the anti-saccade manually; for demonstration. An ASCII file with the manual corrections is generated at the folder of the data file, using its original name with extension: __.corr__ .
+
+Full targets can further by classifier by eight distinct error classes (user defined). Bad data may be label automatically or can be done so manually; see main menu _Target_ for the hotkeys.
+
 ### 2) Export Analyzes
 
-When all target data was double checked, classified, and maybe manually corrected, the analysis 
+When all target data was double checked, classified, and maybe manually corrected, the analysis is ready to be exported; in the main menu:
+``` 
+    Analysis > SaveAnalysis
+```
+A save file dialog enables to define the locate an name of the spread sheet output as .xslx file; to be opened in e.g. excel.
+
+Note, that there are the two sheets __GazeMovement__ and __Blinks__ with related tables. One field with in table statistics is not automatically updated at the moment. To trigger the computation of the standard deviation one has to click into the cell and press ctrl-shift-enter. Array type equations are currently not updated automatically in excel on file open.
+
+The analysis menu provides two more options:
+``` 
+    Analysis > SaveBlinkAnalysis
+```
+To create an output file solely related to the detected blinks and
+``` 
+    Analysis > ShowBlinks
+```
+to create a time-wise aligned overview figure of blinks of several participants. The output looks like the blink overview panel in the standard view, but arranges multiple participants on top of each outer for visual comparison.
+
