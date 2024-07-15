@@ -2,7 +2,7 @@
 
 Please get in touch, if the information is not sufficient or you encounter any other problem.
 
-## I) Configuration
+## A) Configuration
 
 For now, some configurations have to be done in config files before an experiment can be analyzed.
 
@@ -56,7 +56,7 @@ Off 	960	540	30
 post	960	540	30
 ```
 
-## II) Analyzes
+## B) Analyzes
 
 ### 1) Visualize and Verify Data
 
