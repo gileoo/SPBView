@@ -77,6 +77,8 @@ The __reaction time__ detection can be altered by adjusting the _SplitThrs_ valu
 
 If the reaction time is detected wrongly, it can be adjusted manually by holding the _alt_ key and dragging along the horizontal limits in the gaze plot; E.g. press&hold alt, click at the very left of the target view and move to the time value of the start of the saccade and release. The black bars recolor accordingly, and the hole frame will be marked light blue, such that manual corrections become immediately visible; see image below. Here, the reaction time was extended to the anti-saccade manually; for demonstration. An ASCII file with the manual corrections is generated at the folder of the data file, using its original name with extension: __.corr__ .
 
+![Screenshot 2024-07-15 130537](https://github.com/user-attachments/assets/a4deae60-d36f-4009-a59b-101a3c2ef114)
+
 Full targets can further by classifier by eight distinct error classes (user defined). Bad data may be label automatically or can be done so manually; see main menu _Target_ for the hotkeys.
 
 ### 2) Export Analyzes
