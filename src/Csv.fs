@@ -80,7 +80,7 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
     let data =
         file.Rows
         |> Seq.mapi( fun i x -> 
-
+            if i % 500 = 0 then printf "."
             let getColumn c = x.GetColumn (getCol c)
 
             let readAndReplace (s:string) =
@@ -175,7 +175,8 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
     let mediaArr = Array.init media.Count (fun x -> "" )
     media
     |> Map.iter( fun k v -> mediaArr.[v] <- k )
- 
+
+    printfn "" 
     (data, countInvalids, mediaArr, patientName, Array.empty)
 
 // -- data reading function
