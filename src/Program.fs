@@ -7,16 +7,17 @@ open IO
 open DataPreps
 open UpdateView
 
+// v0.1.1 -- first hotfixes for media target splitting reading for  newer tobii device (adjust reading of changed outputs)
+
 // todo:
 // - Check excel spreadsheet values meaning
 // - negative gain? has to be relative to the motion
 // - implement control theory function regression
 // - Target filter not working on start (retype-enter-works)
-// - add navigator panel 
 // - add GUI for target configuration
 // - diameter in mm?
 // - configurable resolution
-
+// - update todos
 
 // -- short type name
 type Sc = Shortcut

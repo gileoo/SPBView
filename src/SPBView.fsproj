@@ -247,12 +247,10 @@
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />
-    <None Include="InputData.conf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="ExperimentSetup.conf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="InputData.conf" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Accord">

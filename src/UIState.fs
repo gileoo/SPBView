@@ -51,6 +51,9 @@ let setBlinkData (bData) (state) =
 let reAnalyze (targetNr) (state) =
     let vTargets     = state.Session.Targets.ChangesValid
     let evalData     = ETReaction.evalTargetEvents state.Session targetNr
+    if vTargets.Length = 0 || Seq.isEmpty evalData then
+        (Seq.empty, List.empty, List.empty, List.empty)
+    else
     let intervalData = ETReaction.baseIntervalsFromTarget evalData state.Session.DataConfig vTargets.[targetNr]
     let blinkData    = ETReaction.blinkIntervalsFromTarget evalData vTargets.[targetNr]
     let target       = snd vTargets.[targetNr]

@@ -62,7 +62,7 @@ let getValidTargetChanges (targetChanges) (targets:(Target option)[]) (data:Eyes
 let getTargetLabels (targetChangesValid:(int*Target)[]) (timeComments:(float*string)[]) (data:EyesSnapshot[]) =
     let flaggedLabels = 
         timeComments
-        |> Array.filter( fun (_,s) -> s.[0]='+' )
+        |> Array.filter( fun (_,s) -> s= "+" + s )
     
     // check if the numer is consistent, assign target labels by number
     if flaggedLabels.Length = targetChangesValid.Length then
@@ -92,19 +92,18 @@ let getTargetLabels (targetChangesValid:(int*Target)[]) (timeComments:(float*str
                         (i, "none", -1)
                     ) )
 
-let getTargetNames (x:string) =
+let getTargetNamesLowerCase (x:string) =
     printfn "getTargetNames %A" x
-
+    let xL = x.ToLower()
     let nameToDot   (y:string) = y.Substring(0,y.IndexOf('.'))
     let nameToSpace (y:string) = y.Substring(0,y.IndexOf(' '))
 
-    let nFull = if x.Contains( "." ) then nameToDot x else x
+    let nFull = if xL.Contains( "." ) then nameToDot xL else xL
     if nFull.Contains( " " ) then
         (nameToSpace nFull, nFull)
     else
         (nFull, nFull)
-     
- 
+
 let rec findPastValidSnapshot (i:int) (data:EyesSnapshot[]) =
     if i < 0 then
         None
@@ -128,6 +127,10 @@ let evalTargetEvents (s:Session) (idx) =
 
     // -- compute direction as vector and index // !!!!
 
+    if s.Targets.ChangesValid.Length < 2 then 
+        Seq.empty
+    else
+
     let lastIdx = 
         if idx < s.Targets.ChangesValid.Length - 1 then 
             (fst s.Targets.ChangesValid.[idx+1]-1)
@@ -147,6 +150,8 @@ let evalTargetEvents (s:Session) (idx) =
 
 //        |> List.filter( fun x -> x.IsSome )
 //        |> List.map( fun x -> x.Value )
+
+    printfn "ma"
 
     // -- evaluate based on direction vector and index
     directions
@@ -213,7 +218,6 @@ let evalTargetEvents (s:Session) (idx) =
                         0.0
                     else
                         (vec3.angleBetween EyeDirY TargetDirY) * (sgn (eyes.GazePointPixel.j - s.Targets.All.[timi.MediaNr].Value.Position.j) )
-
                 {
                     Time = timi
 
@@ -599,7 +603,8 @@ let analyseIntervalsForTarget (ints:IntervalData list) (errorNr:int) targetNr ta
                 timeStamp = 0.0
             }]
     else
-        let nID, _ = getTargetNames targetName
+        printfn "Warning: could not analyse into split intervals?"
+        let nID, _ = getTargetNamesLowerCase targetName
         [ EventAnalysisData.createBad targetNr nID ]
 
 

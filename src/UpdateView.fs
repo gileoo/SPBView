@@ -20,6 +20,10 @@ let getPlotData (s) =
     let vTargets     = s.Session.Targets.ChangesValid
     let evalData, intervalData, blinkData, targetAnalysisData = reAnalyze s.TargetNr s
 
+    if Seq.isEmpty evalData then
+        None 
+    else
+
     let delta = {x= 0.0; y=30.0}
     let saccsMinMax = 
         ControlTheorie.getSaccades intervalData targetAnalysisData
@@ -75,7 +79,7 @@ let getPlotData (s) =
             txt
         else "-"
   
-    {
+    Some {
         targetNr= fst vTargets.[s.TargetNr]
         target = snd vTargets.[s.TargetNr]
         targetLabel = targetLabel
@@ -119,9 +123,12 @@ let updateView (view:WindowsForms.PlotView) (model:PlotModel) =
 
 let updateGaze (gazePlotFigure) (gazePlotView) (s)  =
     // printfn "updateGaze"
-    getPlotData s 
-    |> updatePlotGaze gazePlotFigure
-    |> updateView gazePlotView
+    let gazePlotData = getPlotData s
+
+    if gazePlotData.IsSome then
+        gazePlotData.Value
+        |> updatePlotGaze gazePlotFigure
+        |> updateView gazePlotView
 
 let rec updatePlotTargets 
     (allTargetsPlotFigure) (allTargetsPlotView)

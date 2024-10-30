@@ -10,11 +10,19 @@ open ETReaction
 open Configs
 
 let getCol s = 
+    if GlobalCfg.InputData.ColsNamesCSV.ContainsKey s then
+        let ret = GlobalCfg.InputData.ColsNamesCSV.TryGetValue s 
+        snd ret
+    else
+        ""
+    (*
     match GlobalCfg.InputData.ColsNamesCSV.TryGetValue s with
     | true, value -> 
         value
     | _           -> 
-        failwith "unsupported column header"
+        ""
+        //failwith (sprintf "unsupported column header %s" s)
+    *)
 
 let private readFloatColumn (s:string) (r:CsvRow) =
     let s1 = (r.GetColumn (getCol s)).Replace( ',', '.' )
@@ -81,7 +89,14 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
         file.Rows
         |> Seq.mapi( fun i x -> 
             if i % 500 = 0 then printf "."
-            let getColumn c = x.GetColumn (getCol c)
+            let getColumn c = 
+                let mappedColName = (getCol c)
+                // printfn "getting: %s -> %s" c mappedColName 
+                if mappedColName = "" then failwith (sprintf "unsupported column header %s" mappedColName)
+                try
+                    x.GetColumn mappedColName
+                with 
+                | e -> failwith (sprintf "Column header not found in input file: %s" mappedColName)
 
             let readAndReplace (s:string) =
                 let s1 = (getColumn s)
@@ -94,6 +109,19 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
                 | e -> 
                     printfn "%A Exception: %A, col: %A str: %A" i e.Message s (getColumn s)
                     0.0f
+
+            let readInt (s) =
+                try
+                   let colVal = getColumn s
+                   System.Int32.Parse( colVal )
+                with 
+                | e -> 
+                    printfn "%A Exception: %A, col: %A str: %A" i e.Message s (getColumn s)
+                    0
+
+            let isValid (s:string) =
+                let validityStr = s.ToLower()
+                (validityStr = "1" || validityStr = "valid")
 
             let timeStamp = float (System.UInt64.Parse (getColumn CV.RecordingTimestamp))
 
@@ -124,7 +152,7 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
                 let X = readFloat CV.EyePositionLeftX
                 let Y = readFloat CV.EyePositionLeftY
                 let Z = readFloat CV.EyePositionLeftZ
-                let valid = (getColumn CV.ValidityLeft = "1")
+                let valid = isValid (getColumn CV.ValidityLeft)
                 let dia = readFloat CV.PupilDiameterLeft
 
                 if X = 0.0f && Y = 0.0f then
@@ -149,7 +177,7 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
                         GazePoint = { x=readFloat CV.GazePointRightX
                                       y=readFloat CV.GazePointRightY
                                       z=0.0f } 
-                        Valid=(getColumn CV.ValidityRight = "1")
+                        Valid=isValid (getColumn CV.ValidityRight)
                         PupilDiameter=readFloat CV.PupilDiameterRight
                         }      
 
@@ -157,11 +185,11 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
                         { 
                             Left = left
                             Right = right
-                            GazePointPixel = { i=System.Int32.Parse (getColumn CV.GazePointX) 
-                                               j=System.Int32.Parse (getColumn CV.GazePointY) }
+                            GazePointPixel = { i=readInt CV.GazePointX 
+                                               j=readInt CV.GazePointY }
                             MovementType = (getColumn CV.EyeMovementType)
-                            GazeDuration = (float) (System.UInt32.Parse (getColumn CV.GazeEventDuration))
-                            Event = (match getColumn CV.Event with 
+                            GazeDuration = (float) (readInt CV.GazeEventDuration)
+                            Event = (match getColumn CV.EyeMovementType with 
                                      | "Fixation" -> EyeEvent.Fixation 
                                      | x -> EyeEvent.Unknown x)
                         } 
@@ -174,7 +202,34 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
 
     let mediaArr = Array.init media.Count (fun x -> "" )
     media
-    |> Map.iter( fun k v -> mediaArr.[v] <- k )
+    |> Map.iter( fun k v -> 
+        mediaArr.[v] <- k
+        printfn "%s" k)
+
+    // -- fix filenames for now  
+    let fixImproperFileName = 
+        new Dictionary<string, string>(
+            dict [  ("CueLf (1).jpg", "left CueLf")
+                    ("CueLs (1).jpg", "left CueLs")
+                    ("CueRf (1).jpg", "right CueRf")
+                    ("CueRs (1).jpg", "right CueLs")
+                    ("Target - Start.jpg", "start")
+                    ("Target_lif (1).jpg", "left T_lif")
+                    ("Target_lis (1).jpg", "left T_lis")
+                    ("Target_ref (1).jpg", "right T_ref")
+                    ("Target_res (1).jpg", "right T_res")
+                    ("Targetf (1).jpg", "off")
+                    ("Targets (1).jpg", "off") ] )    
+    media
+    |> Map.iter( fun k v -> 
+        let redirect = 
+            if fixImproperFileName.ContainsKey(k) then
+                snd (fixImproperFileName.TryGetValue k)
+            else
+               "off"
+               
+        mediaArr.[v] <- redirect
+        printfn "hotfix %s -> %s" k redirect)
 
     printfn "" 
     (data, countInvalids, mediaArr, patientName, Array.empty)
@@ -206,7 +261,7 @@ let private getFileAsArrayTimedLabels (file:CsvFile) =
     let data =
         file.Rows
         |> Seq.mapi( fun i x -> 
-
+            if i % 500 = 0 then printf "."
             let getColumn c = x.GetColumn (getCol c)
 
             let readAndReplace (s:string) =
@@ -361,6 +416,7 @@ let private getFileAsArrayTimedLabels (file:CsvFile) =
         |> List.sortBy( fun (x,_) -> x )
         |> List.toArray
 
+    printfn ""
     (data, countInvalids, mediaArr, patientName, moodArr)
 
 let private loadTargets (uri:string) =
@@ -439,11 +495,11 @@ let private makeSession
                 if x = "" then
                     None
                 else
-                    let nID, nFull = getTargetNames x
+                    let nID, nFull = getTargetNamesLowerCase x
     
                     let found =
                         targetDefs
-                        |> Array.tryFind( fun x -> nID.Contains x.IDName )
+                        |> Array.tryFind( fun x -> nID.Contains (x.IDName.ToLower()) )
 
                     match found with
                     | Some x -> 
@@ -565,9 +621,19 @@ let getSession (uri:string) (targetUri:string) (* statesUri *) =
         
     let tsvFile = CsvFile.Load( uri ) 
 
+    let listEmpty (lst:list<string>) = 
+        if lst.Length = 1 then 
+            if lst.Head = "" then 
+                true
+            else
+                false
+        else
+            lst.IsEmpty
+
     let noControlLabels = 
-        GlobalCfg.InputData.StateExperiment.IsEmpty &&
-        GlobalCfg.InputData.StateTarget.IsEmpty
+        listEmpty GlobalCfg.InputData.StateExperiment && listEmpty GlobalCfg.InputData.StateTarget
+    
+
 
     let data, inv, media, _, moods = 
         if noControlLabels then 
