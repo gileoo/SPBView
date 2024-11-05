@@ -44,7 +44,7 @@ let getTargetChanges (arr:EyesSnapshot[]) =
         |> Seq.pairwise
         |> Seq.choose (function
             | ((ia, a), (ib, b))
-                when a.timeTarget.MediaNr <> b.timeTarget.MediaNr
+                when a.timeTarget.TargetNr <> b.timeTarget.TargetNr
                 -> Some ib
             | _ -> None)
         |> Seq.toList
@@ -53,7 +53,7 @@ let getTargetChanges (arr:EyesSnapshot[]) =
 let getValidTargetChanges (targetChanges) (targets:(Target option)[]) (data:EyesSnapshot[]) =
     targetChanges
     |> Seq.choose( fun elem -> 
-        if data.[elem].timeTarget.MediaNr < 0 then None else
+        if data.[elem].timeTarget.TargetNr < 0 then None else
         match targets.[data.[elem].timeTarget.MediaNr] with 
         | Some x -> Some (elem, x)
         | None -> None )
@@ -151,7 +151,6 @@ let evalTargetEvents (s:Session) (idx) =
 //        |> List.filter( fun x -> x.IsSome )
 //        |> List.map( fun x -> x.Value )
 
-    printfn "ma"
 
     // -- evaluate based on direction vector and index
     directions
@@ -282,7 +281,7 @@ let evalTargetEvents (s:Session) (idx) =
                     (s.Data.[i].GazePoint.j - s.Targets.[s.Data.[i].MediaNr].Value.Position.j ) )
                     *)
                 {
-                    Time  = {TimeStamp= float i; MediaNr= 0}
+                    Time  = {TimeStamp= float i; MediaNr= 0; TargetName=""; TargetNr=0}
                     Speed = float i
                     AngularDirection = float i
                     XError = float i

@@ -99,8 +99,10 @@ type TimeAndTarget =
     {
         TimeStamp : float
         MediaNr : int
+        TargetName : string
+        TargetNr : int
     }
-    static member Zero = {TimeStamp= 0.0; MediaNr=0}
+    static member Zero = {TimeStamp= 0.0; MediaNr=0; TargetName=""; TargetNr=0}
 
 type EyesSnapshot =
     {

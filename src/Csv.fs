@@ -85,6 +85,27 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
 
     let mutable patientName = ""
 
+    // -- fix filenames for now  
+    let fixImproperMediaName = 
+        new Dictionary<string, (string * int)>(
+            dict [  ("CueLf (1).jpg", ("left CueLf", 1))
+                    ("CueLs (1).jpg", ("left CueLs", 1))
+                    ("CueRf (1).jpg", ("right CueRf", 2))
+                    ("CueRs (1).jpg", ("right CueLs", 2))
+                    ("Target - Start.jpg", ("start", 0))
+                    ("Target_lif (1).jpg", ("left T_lif", 1))
+                    ("Target_lis (1).jpg", ("left T_lis", 1))
+                    ("Target_ref (1).jpg", ("right T_ref", 2))
+                    ("Target_res (1).jpg", ("right T_res", 2))
+                    ("Targetf (1).jpg", ("off", 3))
+                    ("Targets (1).jpg", ("off", 3)) ] ) 
+
+    let mediaToTarget (key) = 
+        if fixImproperMediaName.ContainsKey(key) then
+            snd (fixImproperMediaName.TryGetValue key)
+        else
+           ("off", 3)
+
     let data =
         file.Rows
         |> Seq.mapi( fun i x -> 
@@ -125,6 +146,7 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
 
             let timeStamp = float (System.UInt64.Parse (getColumn CV.RecordingTimestamp))
 
+
             // check for media file
             let mediaName = getColumn CV.PresentedMediaName
             let mediaNr =
@@ -136,10 +158,14 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
                     media <- Map.add mediaName id media 
                     id
 
+            let targetName = mediaToTarget mediaName
+
             let timeTarget = 
                 {
                     TimeStamp = timeStamp
                     MediaNr = mediaNr 
+                    TargetName = fst targetName
+                    TargetNr = snd targetName
                 }    
 
             let str = readAndReplace CV.EyePositionLeftX
@@ -206,30 +232,11 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
         mediaArr.[v] <- k
         printfn "%s" k)
 
-    // -- fix filenames for now  
-    let fixImproperFileName = 
-        new Dictionary<string, string>(
-            dict [  ("CueLf (1).jpg", "left CueLf")
-                    ("CueLs (1).jpg", "left CueLs")
-                    ("CueRf (1).jpg", "right CueRf")
-                    ("CueRs (1).jpg", "right CueLs")
-                    ("Target - Start.jpg", "start")
-                    ("Target_lif (1).jpg", "left T_lif")
-                    ("Target_lis (1).jpg", "left T_lis")
-                    ("Target_ref (1).jpg", "right T_ref")
-                    ("Target_res (1).jpg", "right T_res")
-                    ("Targetf (1).jpg", "off")
-                    ("Targets (1).jpg", "off") ] )    
+
     media
-    |> Map.iter( fun k v -> 
-        let redirect = 
-            if fixImproperFileName.ContainsKey(k) then
-                snd (fixImproperFileName.TryGetValue k)
-            else
-               "off"
-               
-        mediaArr.[v] <- redirect
-        printfn "hotfix %s -> %s" k redirect)
+    |> Map.iter( fun k v ->               
+        mediaArr.[v] <- fst (mediaToTarget k)
+        printfn "hotfix %s -> %s" k (fst (mediaToTarget k)))
 
     printfn "" 
     (data, countInvalids, mediaArr, patientName, Array.empty)
@@ -356,6 +363,8 @@ let private getFileAsArrayTimedLabels (file:CsvFile) =
                 {
                     TimeStamp = timeStamp
                     MediaNr   = mediaNr 
+                    TargetName = mediaName
+                    TargetNr = mediaNr
                 }    
 
 //            let str = readAndReplace CV.EyePositionLeftX // let mvType = getColumn CV.EyeMovementType

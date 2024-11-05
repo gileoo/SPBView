@@ -49,7 +49,7 @@ let saveSession (s:Session) (filterTargets) (filename) =
 
     //-- headers
     ws.Cells.["A11"].Value <- "Event"
-    ws.Cells.["B11"].Value <- "SubStr1"
+    ws.Cells.["B11"].Value <- "Substr1"
     ws.Cells.["C11"].Value <- "SubStr2"
     ws.Cells.["D11"].Value <- "Label"
     ws.Cells.["E11"].Value <- "ReactionTime"
