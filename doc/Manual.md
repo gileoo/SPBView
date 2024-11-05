@@ -50,27 +50,31 @@ Device = "Tobii"
 ### A.4) Target Positions and Related Media Names
 
 _Forthly_, the presented target name and positions (in pixels) have to be setup. Each presented media (image) is identified by its name and related to the configured target. The default csv files __EyeTargets.conf__ and __Media.conf__can be modified to do so:
+
+__EyeTargets.conf__
 ```
-Prefix	PositionXPx	PositionYPx	Diameter
+TargetName	PositionXPx	PositionYPx	Diameter
 start	960	540	30
 left	260	540	30
 right	1660	540	30
 off 	960	540	30
 post	960	540	30
 ```
+
+__Media.conf__
 ```
 MediaName	TargetName	TargetNr
-CueLf (1).jpg	left	1
-CueLs (1).jpg	left	1
-CueRf (1).jpg	right	2
-CueRs (1).jpg	right	2
-Target - Start.jpg	start	0
-Target_lif (1).jpg	left	1
-Target_lis (1).jpg	left	1
-Target_ref (1).jpg	right	2
-Target_res (1).jpg	right	2
-Targetf (1).jpg	off	3
-Targets (1).jpg	off	3
+CueLf.jpg	left	1
+CueLs.jpg	left	1
+CueRf.jpg	right	2
+CueRs.jpg	right	2
+TargetStart.jpg	start	0
+Target_lif.jpg	left	1
+Target_lis.jpg	left	1
+Target_ref.jpg	right	2
+Target_res.jpg	right	2
+Targetf.jpg	off	3
+Targets.jpg	off	3
 ```
 
 ## B) Analyzes
