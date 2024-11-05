@@ -33,7 +33,7 @@ StatesTarget = Target; leftTarget; rightTarget
 ```
 Those labels have to be present in the input csv/tsv file and are then used to split the target views and to define the starting points for the reaction time computations.
 
-For the second case, those key value pairs have to be left empty. Then, the switch of the presented medial file defines a split.
+For the second case, those key value pairs have to be left empty. Then, the switch of the presented targets defines a split. A target is configured in __EyeTargets.conf__ and the related presented media (image) in ___Media.conf__; see below.
 
 ### A.3) Coordinate Mapping and Device Name
 
