@@ -65,7 +65,7 @@ let updateGazeModel (model:OxyPlot.PlotModel) (p: gazePlotData) =
         | 0 ->
             let sTime = ((Seq.head p.data).Time.TimeStamp) / 1000.0
             let eTime = ((Seq.last p.data).Time.TimeStamp) / 1000.0
-            sprintf "'%s' %d/%d @ %d %.3f-%.3f [s], Speed avg: %.2f, ReactionTime: %f [ms], ClosestMood: %s" 
+            sprintf "'%s' %d/%d @ %d %.3f-%.3f [s], Speed avg: %.2f, ReactionTime: %.2f [ms], ClosestMood: %s" 
                        p.target.FullName (p.currNr+1) (p.currSize) p.targetNr sTime eTime avgSpeed reactionTime p.targetLabel
 
         | x -> sprintf "Error %d --- '%s' %d/%d @ %d" x p.target.FullName (p.currNr+1) (p.currSize) p.targetNr

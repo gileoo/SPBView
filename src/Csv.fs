@@ -85,27 +85,11 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
 
     let mutable patientName = ""
 
-    // -- fix filenames for now  
-    (*
-    let fixImproperMediaName = 
-        new Dictionary<string, (string * int)>(
-            dict [  ("CueLf (1).jpg", ("left CueLf", 1))
-                    ("CueLs (1).jpg", ("left CueLs", 1))
-                    ("CueRf (1).jpg", ("right CueRf", 2))
-                    ("CueRs (1).jpg", ("right CueLs", 2))
-                    ("Target - Start.jpg", ("start", 0))
-                    ("Target_lif (1).jpg", ("left T_lif", 1))
-                    ("Target_lis (1).jpg", ("left T_lis", 1))
-                    ("Target_ref (1).jpg", ("right T_ref", 2))
-                    ("Target_res (1).jpg", ("right T_res", 2))
-                    ("Targetf (1).jpg", ("off", 3))
-                    ("Targets (1).jpg", ("off", 3)) ] ) 
-    *)
     let mediaToTarget (key) = 
         if mediaToTarget.ContainsKey(key) then
             snd (mediaToTarget.TryGetValue key)
         else
-           ("off", 3)
+           ("", -1)
 
     let data =
         file.Rows
@@ -129,7 +113,9 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
                     System.Single.Parse( readAndReplace s , CultureInfo.InvariantCulture )
                 with 
                 | e -> 
+                    #if DEBUG
                     printfn "%A Exception: %A, col: %A str: %A" i e.Message s (getColumn s)
+                    #endif
                     0.0f
 
             let readInt (s) =
@@ -138,7 +124,9 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
                    System.Int32.Parse( colVal )
                 with 
                 | e -> 
+                    #if DEBUG
                     printfn "%A Exception: %A, col: %A str: %A" i e.Message s (getColumn s)
+                    #endif
                     0
 
             let isValid (s:string) =
@@ -229,17 +217,14 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
 
     let mediaArr = Array.init media.Count (fun x -> "" )
     media
-    |> Map.iter( fun k v -> 
-        mediaArr.[v] <- k
-        printfn "%s" k)
+    |> Map.iter (fun k v -> 
+        let mediaName, mediaNr = mediaToTarget k
+        if mediaNr > -1 then
+            mediaArr.[v] <- sprintf "%s (%d) %s" mediaName mediaNr k
+        else
+            mediaArr.[v] <- k
+        )
 
-
-    media
-    |> Map.iter( fun k v ->               
-        mediaArr.[v] <- fst (mediaToTarget k)
-        printfn "hotfix %s -> %s" k (fst (mediaToTarget k)))
-
-    printfn "" 
     (data, countInvalids, mediaArr, patientName, Array.empty)
 
 // -- data reading function
@@ -491,16 +476,13 @@ let private loadTargets (uri:string) =
         Array.empty
 
 let private loadTargetMedia (uri:string) : Dictionary<string, (string * int)> =
+    
     let mediaToTarget = new Dictionary<string, (string * int)>()
+    
     try
-       
         let tsvFile = CsvFile.Load( uri )
         tsvFile.Rows
         |> Seq.iteri( fun i x -> 
-            let readAndReplace (s:string) =
-                let s1 = (x.GetColumn s)
-                s1.Replace( ',', '.' )
-
             let readInt32 (s:string) = System.Int32.Parse (x.GetColumn s)
 
             let MediaName = x.GetColumn "MediaName"

@@ -109,26 +109,22 @@ let public showOpenMultiFileDialog (title) (filename) (fileExtensions) =
         None
 
 let openSession filePath =
-    printfn "open session!"
+    printfn "opening session" 
+    printfn "  data file: %s" filePath
+    printfn "  target file: %s" filePathEyeTargets
+    printfn "  media file: %s (for media split mode only)" filePathMedia
+
     let timer = System.Diagnostics.Stopwatch.StartNew()
  
     // -- read all data from file in data records and from target definition file
     let experiment = Csv.getSession filePath filePathEyeTargets filePathMedia
 
-    // -- printf some read related stats    
-    printfn "read in: %A [ms]" timer.Elapsed.TotalMilliseconds
-    //EyeTracking.printSessionOverView experiment
+    // -- print some read related stats    
+    printfn "\nread in: %A [ms]" timer.Elapsed.TotalMilliseconds
+    // ETReaction.printSessionOverView experiment
+    ETReaction.printSessionShortInfo experiment
 
     guiSplitThreshold <- experiment.DataConfig.splitThreshold
-
-    printfn "split in %d/%d targets" 
-        (Seq.length experiment.Targets.ChangesValid)
-        (Seq.length experiment.Targets.All)
-    
-    printfn "Time Comments: %d" (experiment.TimeComment.Length)
-    printfn "Valid Changes: %d" (experiment.Targets.ChangesValid.Length)
-
-    printfn "loaded eye data %d" experiment.EyeData.Length 
 
     experiment
 

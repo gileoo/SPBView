@@ -93,7 +93,6 @@ let getTargetLabels (targetChangesValid:(int*Target)[]) (timeComments:(float*str
                     ) )
 
 let getTargetNamesLowerCase (x:string) =
-    printfn "getTargetNames %A" x
     let xL = x.ToLower()
     let nameToDot   (y:string) = y.Substring(0,y.IndexOf('.'))
     let nameToSpace (y:string) = y.Substring(0,y.IndexOf(' '))
@@ -606,6 +605,16 @@ let analyseIntervalsForTarget (ints:IntervalData list) (errorNr:int) targetNr ta
         let nID, _ = getTargetNamesLowerCase targetName
         [ EventAnalysisData.createBad targetNr nID ]
 
+
+let printSessionShortInfo s =
+    printfn "split in %d/%d targets" 
+        (Seq.length s.Targets.ChangesValid)
+        (Seq.length s.Targets.All)
+    
+    printfn "Time Comments: %d" (s.TimeComment.Length)
+    printfn "Valid Changes: %d" (s.Targets.ChangesValid.Length)
+
+    printfn "loaded eye data %d" s.EyeData.Length
 
 let printSessionOverView s = 
     // -- print some session stats
