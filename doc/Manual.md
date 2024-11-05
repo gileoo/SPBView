@@ -53,9 +53,9 @@ _Forthly_, the presented media prefix and according target positions (in pixels)
 ```
 Prefix	PositionXPx	PositionYPx	Diameter
 start	960	540	30
-Left	260	540	30
-Right	1660	540	30
-Off 	960	540	30
+left	260	540	30
+right	1660	540	30
+off 	960	540	30
 post	960	540	30
 ```
 
