@@ -33,7 +33,7 @@ StatesTarget = Target; leftTarget; rightTarget
 ```
 Those labels have to be present in the input csv/tsv file and are then used to split the target views and to define the starting points for the reaction time computations.
 
-For the second case, those key value pairs have to be left empty. Then, the switch of the presented targets defines a split. A target is configured in __EyeTargets.conf__ and the related presented media (image) in ___Media.conf__; see below.
+For the second case, those key value pairs have to be left empty. Then, the switch of the presented targets defines a split. A target is configured in __EyeTargets.conf__ and the related presented media (image) in ___Media.conf__; see A.4).
 
 ### A.3) Coordinate Mapping and Device Name
 
@@ -49,7 +49,7 @@ Device = "Tobii"
 
 ### A.4) Target Positions and Related Media Names
 
-_Forthly_, the presented media prefix and according target positions (in pixels) have to be setup. Each presented media (image) is identified by its prefix, which has to be contained in the name of the presented media name: e.g. 'LeftTarget.png' as media name and 'Left' as predix for identification. The default csv file __EyeTargets.conf__ can be modified to do so:
+_Forthly_, the presented target name and positions (in pixels) have to be setup. Each presented media (image) is identified by its name and related to the configured target. The default csv files __EyeTargets.conf__ and __Media.conf__can be modified to do so:
 ```
 Prefix	PositionXPx	PositionYPx	Diameter
 start	960	540	30
@@ -57,6 +57,20 @@ left	260	540	30
 right	1660	540	30
 off 	960	540	30
 post	960	540	30
+```
+```
+MediaName	TargetName	TargetNr
+CueLf (1).jpg	left	1
+CueLs (1).jpg	left	1
+CueRf (1).jpg	right	2
+CueRs (1).jpg	right	2
+Target - Start.jpg	start	0
+Target_lif (1).jpg	left	1
+Target_lis (1).jpg	left	1
+Target_ref (1).jpg	right	2
+Target_res (1).jpg	right	2
+Targetf (1).jpg	off	3
+Targets (1).jpg	off	3
 ```
 
 ## B) Analyzes
