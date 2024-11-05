@@ -63,19 +63,21 @@ post	960	540	30
 
 __Media.conf:__
 ```
-MediaName	TargetName	TargetNr
-CueLf.jpg	left	1
-CueLs.jpg	left	1
-CueRf.jpg	right	2
-CueRs.jpg	right	2
-TargetStart.jpg	start	0
-Target_lif.jpg	left	1
-Target_lis.jpg	left	1
-Target_ref.jpg	right	2
-Target_res.jpg	right	2
+MediaName	TargetName
+CueLf.jpg	left
+CueLs.jpg	left
+CueRf.jpg	right
+CueRs.jpg	right
+TargetStart.jpg	start
+Target_lif.jpg	left
+Target_lis.jpg	left
+Target_ref.jpg	right
+Target_res.jpg	right
 Targetf.jpg	off	3
 Targets.jpg	off	3
 ```
+
+Note: TargetName in the two configs must match!
 
 ## B) Analyzes
 
