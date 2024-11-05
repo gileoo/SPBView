@@ -231,7 +231,7 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
 //    generates and fills the eye tracking data types
 //    returns an array of EyesSnapshots, a count of invalid lines, 
 //    and an array of target-file names
-let private getFileAsArrayTimedLabels (file:CsvFile) =
+let private getFileAsArrayTimedLabels (file:CsvFile)=
     let mutable countInvalids = 0
     let mutable media = Map.empty
 
@@ -266,7 +266,9 @@ let private getFileAsArrayTimedLabels (file:CsvFile) =
                     System.Double.Parse( readAndReplace s , CultureInfo.InvariantCulture )
                 with 
                 | e -> 
+                    #if DEBUG
                     printfn "%A Exception: %A, col: %A str: %A" i e.Message s (getColumn s)
+                    #endif
                     0.0
 
             let readFloatNeg1 (s) =
@@ -650,6 +652,15 @@ let private makeSession
         TimeComment = timeComment 
         DataConfig = config }
 
+(*
+let extractFixedValuesOfInputData filePath =
+    EyePositionLeftX = Eye position left X (RCSmm)
+    EyePositionLeftY = Eye position left Y (RCSmm)
+    EyePositionLeftZ = Eye position left Z (RCSmm)
+    EyePositionRightX = Eye position right X (RCSmm)
+    EyePositionRightY = Eye position right Y (RCSmm)
+    EyePositionRightZ = Eye position right Z (RCSmm)
+*)
 
 // -- open an experiment from a file into a session
 let getSession (uri:string) (targetUri:string) (mediaUri:string) (* statesUri *) =

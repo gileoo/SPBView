@@ -116,6 +116,7 @@ type ProgramCfg = {
 
 type DataCfg = {
     ColsNamesCSV : Dictionary<string, string>
+    ConstColsNamesCSV : Dictionary<string, string>
     StateTargetType : string list
     StateExperiment : string list
     StateTarget : string list
@@ -231,6 +232,8 @@ let readColumnsAndStatesNames() =
     let mutable stateExperiment = List.empty
     let mutable stateTarget = List.empty
     let mutable stateEyeMovement = List.empty
+    
+    let mutable constCSV = new Dictionary<string, string>()
 
     let readLines = File.ReadLines( filePathInputData )
 
@@ -246,7 +249,12 @@ let readColumnsAndStatesNames() =
                     cols
                     |> Array.find( fun x -> colName = x )
     
-                colsCSV.Add( column, toks.[1].Trim() )
+                let rhs = toks.[1].Trim()
+
+                if rhs.Contains("user-const") then
+                    constCSV.Add( column, toks.[1].Trim() )
+                else
+                    colsCSV.Add( column, toks.[1].Trim() )
     
             elif flags |> Array.contains colName then
                 toks.[1].Split(';')
@@ -271,6 +279,7 @@ let readColumnsAndStatesNames() =
     printfn "Read Configuration Flag EyeMovement: %A" stateEyeMovement
     
     {   ColsNamesCSV = colsCSV
+        ConstColsNamesCSV = constCSV
         StateTargetType = stateTargetType
         StateExperiment = stateExperiment
         StateTarget = stateTarget
