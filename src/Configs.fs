@@ -15,11 +15,13 @@ let fileNameIni = "SPBView.ini"
 let fileNameExpSetup = "ExperimentSetup.conf"
 let fileNameInputData = "InputData.conf"
 let fileNameEyeTargets = "EyeTargets.conf"
+let fileNameMedia = "Media.conf"
 
 let filePathIni = Path.Combine(cfgPath, fileNameIni)
 let filePathExpSetup = Path.Combine(cfgPath, fileNameExpSetup)
 let filePathInputData = Path.Combine(cfgPath, fileNameInputData)
 let filePathEyeTargets = Path.Combine(cfgPath, fileNameEyeTargets)
+let filePathMedia = Path.Combine(cfgPath, fileNameMedia)
 
 
 // -- Internal Variable Names (column variable as key in the InputData.conf file)

@@ -113,7 +113,7 @@ let openSession filePath =
     let timer = System.Diagnostics.Stopwatch.StartNew()
  
     // -- read all data from file in data records and from target definition file
-    let experiment = Csv.getSession filePath filePathEyeTargets
+    let experiment = Csv.getSession filePath filePathEyeTargets filePathMedia
 
     // -- printf some read related stats    
     printfn "read in: %A [ms]" timer.Elapsed.TotalMilliseconds

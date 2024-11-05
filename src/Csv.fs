@@ -79,13 +79,14 @@ type labelStates =
 //    returns an array of EyesSnapshots, a count of invalid lines, 
 //    and an array of target-file names
 
-let private getFileAsArrayMediaChange (file:CsvFile) =
+let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<string, (string * int)>)=
     let mutable countInvalids = 0
     let mutable media = Map.empty
 
     let mutable patientName = ""
 
     // -- fix filenames for now  
+    (*
     let fixImproperMediaName = 
         new Dictionary<string, (string * int)>(
             dict [  ("CueLf (1).jpg", ("left CueLf", 1))
@@ -99,10 +100,10 @@ let private getFileAsArrayMediaChange (file:CsvFile) =
                     ("Target_res (1).jpg", ("right T_res", 2))
                     ("Targetf (1).jpg", ("off", 3))
                     ("Targets (1).jpg", ("off", 3)) ] ) 
-
+    *)
     let mediaToTarget (key) = 
-        if fixImproperMediaName.ContainsKey(key) then
-            snd (fixImproperMediaName.TryGetValue key)
+        if mediaToTarget.ContainsKey(key) then
+            snd (mediaToTarget.TryGetValue key)
         else
            ("off", 3)
 
@@ -456,7 +457,7 @@ let private loadTargets (uri:string) =
 
                 let readUInt64 (s:string) = System.UInt64.Parse (x.GetColumn s)
 
-                let prefix = x.GetColumn "Prefix"
+                let prefix = x.GetColumn "TargetName"
 
                 let pPx =
                     if isPx then 
@@ -488,6 +489,34 @@ let private loadTargets (uri:string) =
         System.Windows.Forms.MessageBox.Show( 
             sprintf "EyeTargets.conf missing! Please place at: %s " uri ) |> ignore
         Array.empty
+
+let private loadTargetMedia (uri:string) : Dictionary<string, (string * int)> =
+    let mediaToTarget = new Dictionary<string, (string * int)>()
+    try
+       
+        let tsvFile = CsvFile.Load( uri )
+        tsvFile.Rows
+        |> Seq.iteri( fun i x -> 
+            let readAndReplace (s:string) =
+                let s1 = (x.GetColumn s)
+                s1.Replace( ',', '.' )
+
+            let readInt32 (s:string) = System.Int32.Parse (x.GetColumn s)
+
+            let MediaName = x.GetColumn "MediaName"
+            let TargetName = x.GetColumn "TargetName"
+            let TargetNr = readInt32 "TargetNr"
+                    
+            mediaToTarget.Add( MediaName, (TargetName, TargetNr))
+            )
+        mediaToTarget
+        
+    with 
+    | :? System.IO.FileNotFoundException -> 
+        System.Windows.Forms.MessageBox.Show( 
+            sprintf "Media.conf missing! Please place at: %s " uri ) |> ignore
+        mediaToTarget
+        
 
 // -- helper function to create a session record
 let private makeSession  
@@ -625,7 +654,7 @@ let private makeSession
 
 
 // -- open an experiment from a file into a session
-let getSession (uri:string) (targetUri:string) (* statesUri *) =
+let getSession (uri:string) (targetUri:string) (mediaUri:string) (* statesUri *) =
     if GlobalCfg.InputData.ColsNamesCSV.Count = 0  then failwith "No config loaded"
         
     let tsvFile = CsvFile.Load( uri ) 
@@ -642,17 +671,18 @@ let getSession (uri:string) (targetUri:string) (* statesUri *) =
     let noControlLabels = 
         listEmpty GlobalCfg.InputData.StateExperiment && listEmpty GlobalCfg.InputData.StateTarget
     
-
+    let mediaAsTarget = loadTargetMedia filePathMedia
 
     let data, inv, media, _, moods = 
         if noControlLabels then 
-            getFileAsArrayMediaChange tsvFile
+            getFileAsArrayMediaChange tsvFile mediaAsTarget
         else
             getFileAsArrayTimedLabels tsvFile   
 
     let name = System.IO.Path.GetFileName uri
     
     let targetProto = loadTargets targetUri   // overwritten name (!)
+  
     let session = makeSession (System.IO.Path.GetDirectoryName uri) data targetProto inv media name moods
     
     let evalData = 
