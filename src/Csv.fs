@@ -475,21 +475,37 @@ let private loadTargets (uri:string) =
             sprintf "EyeTargets.conf missing! Please place at: %s " uri ) |> ignore
         Array.empty
 
-let private loadTargetMedia (uri:string) : Dictionary<string, (string * int)> =
+let private loadTargetMedia (uri:string) (targets:Target[]): Dictionary<string, (string * int)> =
     
     let mediaToTarget = new Dictionary<string, (string * int)>()
     
+    let loadedTargetNames =
+        targets
+        |> Array.map( fun x -> x.IDName )
+
     try
         let tsvFile = CsvFile.Load( uri )
         tsvFile.Rows
         |> Seq.iteri( fun i x -> 
             let readInt32 (s:string) = System.Int32.Parse (x.GetColumn s)
 
-            let MediaName = x.GetColumn "MediaName"
-            let TargetName = x.GetColumn "TargetName"
-            let TargetNr = readInt32 "TargetNr"
-                    
-            mediaToTarget.Add( MediaName, (TargetName, TargetNr))
+            let mediaName = x.GetColumn "MediaName"
+            let targetName = x.GetColumn "TargetName"
+
+            let nr = 
+                loadedTargetNames 
+                |> Array.tryFindIndex (fun x -> targetName = x)
+
+            let targetNr = 
+                match nr with
+                    | Some tNr -> tNr 
+                    | None -> 
+                        printfn "Warning: targetName of Media.conf not found in EyeTarget.conf"
+                        loadedTargetNames |> Array.iteri( fun i x -> printfn "%d: '%s'" i x)
+                        printfn " -> targetName '%s' not found" targetName
+                        -1
+            
+            mediaToTarget.Add( mediaName, (targetName, targetNr))
             )
         mediaToTarget
         
@@ -653,7 +669,8 @@ let getSession (uri:string) (targetUri:string) (mediaUri:string) (* statesUri *)
     let noControlLabels = 
         listEmpty GlobalCfg.InputData.StateExperiment && listEmpty GlobalCfg.InputData.StateTarget
     
-    let mediaAsTarget = loadTargetMedia filePathMedia
+    let targetProto = loadTargets targetUri   // overwritten name (!)
+    let mediaAsTarget = loadTargetMedia filePathMedia targetProto
 
     let data, inv, media, _, moods = 
         if noControlLabels then 
@@ -662,9 +679,7 @@ let getSession (uri:string) (targetUri:string) (mediaUri:string) (* statesUri *)
             getFileAsArrayTimedLabels tsvFile   
 
     let name = System.IO.Path.GetFileName uri
-    
-    let targetProto = loadTargets targetUri   // overwritten name (!)
-  
+
     let session = makeSession (System.IO.Path.GetDirectoryName uri) data targetProto inv media name moods
     
     let evalData = 
