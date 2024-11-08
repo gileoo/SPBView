@@ -12,17 +12,12 @@ open Configs
 let getCol s = 
     if GlobalCfg.InputData.ColsNamesCSV.ContainsKey s then
         let ret = GlobalCfg.InputData.ColsNamesCSV.TryGetValue s 
-        snd ret
+        (snd ret).Trim()
+    else if GlobalCfg.InputData.ConstColsNamesCSV.ContainsKey s then
+        let ret = GlobalCfg.InputData.ConstColsNamesCSV.TryGetValue s 
+        (snd ret).Trim()
     else
         ""
-    (*
-    match GlobalCfg.InputData.ColsNamesCSV.TryGetValue s with
-    | true, value -> 
-        value
-    | _           -> 
-        ""
-        //failwith (sprintf "unsupported column header %s" s)
-    *)
 
 let private readFloatColumn (s:string) (r:CsvRow) =
     let s1 = (r.GetColumn (getCol s)).Replace( ',', '.' )
@@ -98,11 +93,15 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
             let getColumn c = 
                 let mappedColName = (getCol c)
                 // printfn "getting: %s -> %s" c mappedColName 
-                if mappedColName = "" then failwith (sprintf "unsupported column header %s" mappedColName)
-                try
-                    x.GetColumn mappedColName
-                with 
-                | e -> failwith (sprintf "Column header not found in input file: %s" mappedColName)
+                if mappedColName = "" then 
+                    failwith (sprintf "unsupported column header %s" mappedColName)
+                if mappedColName.Contains("user-const") then
+                    mappedColName.Substring(10)
+                else
+                    try
+                        x.GetColumn mappedColName
+                    with 
+                    | e -> failwith (sprintf "Column header not found in input file: %s" mappedColName)
 
             let readAndReplace (s:string) =
                 let s1 = (getColumn s)
@@ -255,7 +254,19 @@ let private getFileAsArrayTimedLabels (file:CsvFile)=
         file.Rows
         |> Seq.mapi( fun i x -> 
             if i % 500 = 0 then printf "."
-            let getColumn c = x.GetColumn (getCol c)
+            //let getColumn c = x.GetColumn (getCol c)
+            let getColumn c = 
+                let mappedColName = (getCol c)
+                // printfn "getting: %s -> %s" c mappedColName 
+                if mappedColName = "" then 
+                    failwith (sprintf "unsupported column header %s" mappedColName)
+                if mappedColName.Contains("user-const") then
+                    mappedColName.Substring(10)
+                else
+                    try
+                        x.GetColumn mappedColName
+                    with 
+                    | e -> failwith (sprintf "Column header not found in input file: %s" mappedColName)
 
             let readAndReplace (s:string) =
                 let s1 = getColumn s
@@ -367,9 +378,9 @@ let private getFileAsArrayTimedLabels (file:CsvFile)=
 
             let left = 
                 { 
-                Position={ x= 228.1f
-                           y= 208.0f
-                           z= 599.5f }
+                Position={ x=readFloatNeg1 CV.EyePositionLeftX
+                           y=readFloatNeg1 CV.EyePositionLeftY
+                           z=readFloatNeg1 CV.EyePositionLeftZ }
                 GazePoint = pxToMm (readInt32Neg1 CV.GazePointLeftX)  (readInt32Neg1 CV.GazePointLeftY)
                 Valid=valid
                 PupilDiameter=readFloatNeg1 CV.PupilDiameterLeft 
@@ -377,9 +388,9 @@ let private getFileAsArrayTimedLabels (file:CsvFile)=
          
             let right = 
                 { 
-                Position={ x= 289.9f
-                           y= 206.5f
-                           z= 603.2f }
+                Position={ x=readFloatNeg1 CV.EyePositionRightX
+                           y=readFloatNeg1 CV.EyePositionRightY
+                           z=readFloatNeg1 CV.EyePositionRightZ }
                 GazePoint = pxToMm (readInt32Neg1 CV.GazePointRightX)(readInt32Neg1 CV.GazePointRightY)
                 Valid=(getColumn CV.ValidityRight = "1")
                 PupilDiameter=readFloatNeg1 CV.PupilDiameterRight
@@ -651,16 +662,6 @@ let private makeSession
         UserCorrections = usedCorrections
         TimeComment = timeComment 
         DataConfig = config }
-
-(*
-let extractFixedValuesOfInputData filePath =
-    EyePositionLeftX = Eye position left X (RCSmm)
-    EyePositionLeftY = Eye position left Y (RCSmm)
-    EyePositionLeftZ = Eye position left Z (RCSmm)
-    EyePositionRightX = Eye position right X (RCSmm)
-    EyePositionRightY = Eye position right Y (RCSmm)
-    EyePositionRightZ = Eye position right Z (RCSmm)
-*)
 
 // -- open an experiment from a file into a session
 let getSession (uri:string) (targetUri:string) (mediaUri:string) (* statesUri *) =
