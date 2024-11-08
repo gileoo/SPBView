@@ -336,12 +336,24 @@ let private getFileAsArrayTimedLabels (file:CsvFile)=
                         | ("pro",  "rightTarget") -> 4
                         | _ -> 0   
                         *)
+
+                        (*
                         match lastStateTarget with
                         | "leftTarget"  -> 1
                         | "rightTarget" -> 2
                         | "Trial Start"
                         | "Target Off"  -> 3
                         | _ -> 0  
+                        *)
+
+                        let targetIdx = 
+                            GlobalCfg.InputData.StateTarget 
+                            |> List.toArray
+                            |> Array.tryFindIndex (fun x -> x = lastStateTarget) 
+                        
+                        match targetIdx with
+                        | Some x -> x
+                        | None -> GlobalCfg.InputData.StateTarget.Length - 1
                     else                        
                         if timeStamp - lastEvent <= 1000.0 then
                             lastNr
