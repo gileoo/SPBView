@@ -2,7 +2,7 @@
 
 Please get in touch, if the information is not sufficient or you encounter any other problem.
 
-Find hands on examples [here](doc/Examples.md).
+Find hands on examples [here](Examples.md).
 
 ## A) Configuration
 
