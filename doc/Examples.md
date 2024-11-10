@@ -4,6 +4,7 @@ This is a short step by step guidance to view and analyze the recording stored i
 exampleData/example01-TimeLabels.tsv
 ```
 
+
 ## 1) Configure header names
 
 SPBView openss .tsv or .csv files. To read in the required values, the names of the headers must be provided in a config file. 
@@ -41,6 +42,7 @@ StatesEyeMovement = anti; pro
 In this example, we were only interested in the reaction times and not in the actual deviations from looking at a specific target. To minimize the data file sizes, we did not export the 3D eye positions for every time stamp, but replaced it by a constant but close to true value. Therefore, we used the _user-const_ keyword to fixate the three eye position values.
 Target and experiment state string have to be configured to match the according timed-lables in the __.tsv__ file. They were either set by Tobii studio or OpenSesame. 
 
+
 ## 2) Configure Targets
 __EyeTargets.conf__
 ```
@@ -51,6 +53,7 @@ right	1660	540	30
 off	960	540	30
 ```
 Provide the target positions in pixel space of the shown target images. Each target type will split into the viewed time interval. Note, that the ordering in the __StateTarget__ above must follow the ordering of the lines in the __EyeTargets.conf__.
+
 
 ## 3) Open SPB View
 
@@ -68,6 +71,7 @@ Select the provided example file __example01-TimeLabels.tsv__. Or open it via th
  
  ![image](https://github.com/user-attachments/assets/13dbbe16-ada1-41e1-b768-fe5173482ca8)
 
+
 ## 4) Correct Reaction Time or Error-Classify Targets
 
  Control all the targets of interst and manually adjust by either correcting the automatically detected reaction time, or label the whole target via an error class (_ctrl-1_ to _ctrl-0_); or as _bad data_ (_ctrl-B_). The reaction time is corrected by holding the _ctrl_ key and dragging in the gazew view from start to end (or vice versa); for the time coordinates (x-axis).
@@ -77,6 +81,7 @@ Select the provided example file __example01-TimeLabels.tsv__. Or open it via th
 If the reaction time was adjusted manually, the frame is colored in lila. Note the change of the black bars illustration speed and reaction time. For error classes colors from red to yellow are used.
 
 ![image](https://github.com/user-attachments/assets/cfa3e14e-68e9-4409-bed5-690e129ea7aa)
+
 
 ## 5) Export Analysis
 
