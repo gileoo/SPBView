@@ -66,6 +66,8 @@ Select the provided example file __example01-TimeLabels.tsv__. Or open it via th
  
  ![image](https://github.com/user-attachments/assets/13dbbe16-ada1-41e1-b768-fe5173482ca8)
 
+## 4) Correct Reaction Time or Error-Classify Targets
+
  Control all the targets of interst and manually adjust by either correcting the automatically detected reaction time, or label the whole target via an error class (_ctrl-1_ to _ctrl-0_); or as _bad data_ (_ctrl-B_). The reaction time is corrected by holding the _ctrl_ key and dragging in the gazew view from start to end (or vice versa); for the time coordinates (x-axis).
 
 ![image](https://github.com/user-attachments/assets/138797bf-8bdd-4e97-af86-6a66fd23a417)
@@ -73,6 +75,8 @@ Select the provided example file __example01-TimeLabels.tsv__. Or open it via th
 If the reaction time was adjusted manually, the frame is colored in lila. For error classes colors from red to yellow are used.
 
 ![image](https://github.com/user-attachments/assets/cfa3e14e-68e9-4409-bed5-690e129ea7aa)
+
+## 5) Export Analysis
 
 Error classes are excluded in the analysis table output. Manual reaction time are used instead of the auto detected ones. Further, only target are exported that are white-listed in the _Filter_.
 Export the analysis via the main menu: _Analysis>SaveAnalysis_.
