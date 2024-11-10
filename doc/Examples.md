@@ -35,6 +35,6 @@ EyePositionRightZ = user-const 603.2
 Event = Event
 StatesTargetType = fearful; traurig; happy; neutral; sad; arousal; positive
 StatesExperiment = Instructions; start; Trial Start
-StatesTarget = Target; leftTarget; rightTarget
+StatesTarget = Trial start; leftTarget; rightTarget; Target Off
 StatesEyeMovement = anti; pro
 ```
