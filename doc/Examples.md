@@ -11,7 +11,7 @@ Please open the first lines of the __.tsv__ file (e.g. as a spreadsheet) as well
 Go through all the data value header names, e.g. top down in the __.conf__ file and ensure that the text matches the related column headers.
 
 Data file header:
-![image](https://github.com/user-attachments/assets/fc33e94a-3954-4b97-bb35-3a124b43d7d1)
+![image](https://github.com/user-attachments/assets/fc33e94a-3954-4b97-bb35-3a124b43d7d1){:width="50%"}
 
 __InputData.conf__
 ```
