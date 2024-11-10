@@ -8,6 +8,7 @@ open DataPreps
 open UpdateView
 
 // v0.1.1 -- first hotfixes for media target splitting reading for  newer tobii device (adjust reading of changed outputs)
+// v0.2.0 -- fixed for target and image name redirection in Media.conf, and fixed hanglich of user-const values in InputData.conf
 
 // todo:
 // - Check excel spreadsheet values meaning
