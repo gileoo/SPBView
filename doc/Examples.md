@@ -74,7 +74,7 @@ Select the provided example file __example01-TimeLabels.tsv__. Or open it via th
 
 ![image](https://github.com/user-attachments/assets/138797bf-8bdd-4e97-af86-6a66fd23a417)
 
-If the reaction time was adjusted manually, the frame is colored in lila. For error classes colors from red to yellow are used.
+If the reaction time was adjusted manually, the frame is colored in lila. Note the change of the black bars illustration speed and reaction time. For error classes colors from red to yellow are used.
 
 ![image](https://github.com/user-attachments/assets/cfa3e14e-68e9-4409-bed5-690e129ea7aa)
 
