@@ -1,5 +1,4 @@
-﻿
-open System.Windows.Forms
+﻿open System.Windows.Forms
 open System.Drawing
 open OxyPlot
 open System
