@@ -13,6 +13,7 @@ For now, some configurations have to be done in config files before an experimen
 
 ### A.1) Data Column Names
 
+#### Input Headers
 _Firstly_, check the column names of your csv/tsv file and adjust the __InputData.conf__ file accordingly. It consists of key value pairs. The key (left) is predefined and the right hand side reflects the column name of the input data file, e.g.:
 ```
 ...
@@ -24,6 +25,7 @@ EyePositionLeftZ = Eye position left Z (RCSmm)
 
 Note that there are some data preparation tools for reshaping the csv/tsv data gathered in the main menu: DataPrep. That section will further be extended dependent on the need. It e.g. provides a tool to fix wrong numbers of tabulators, when text labels where inserted to the eye tracking data from a different software controlling the experiment run.
 
+#### Const Input Values
 SPBView allows to fix time-stamped input parameters by user defined ones. In that case instead of the row/column of the input file the provided string is read in the reader. This is configured also in the __InputData.conf__ specifying _user-const_ before the value, e.g.:
 
 ```
