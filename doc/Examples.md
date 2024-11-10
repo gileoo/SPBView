@@ -84,4 +84,5 @@ Export the analysis via the main menu: _Analysis>SaveAnalysis_.
 ![image](https://github.com/user-attachments/assets/95738e8e-a627-478c-99cb-4fc528b58c31)
 
 Note that some rows in the header are array-entered equations. To update them, they have to be focused in the _fx_ field and _shift-ctlr-enter_ has to be pressed.
-
+The excel spread sheet can be altered and used as a base for data import; e.g. into R-Studio or SPSS.
+Besides the __GazeMovement__ sheet there is also a sheet __Blinks__ listing all found blink events. 
