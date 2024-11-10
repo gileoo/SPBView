@@ -2,6 +2,8 @@
 
 Please get in touch, if the information is not sufficient or you encounter any other problem.
 
+Find hands on examples [here](doc/Examples.md).
+
 ## A) Configuration
 
 For now, some configurations have to be done in config files before an experiment can be analyzed.
