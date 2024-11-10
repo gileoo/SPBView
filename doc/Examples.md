@@ -39,6 +39,7 @@ StatesTarget = Trial start; leftTarget; rightTarget; Target Off
 StatesEyeMovement = anti; pro
 ```
 In this example, we were only interested in the reaction times and not in the actual deviations from looking at a specific target. To minimize the data file sizes, we did not export the 3D eye positions for every time stamp, but replaced it by a constant but close to true value. Therefore, we used the _user-const_ keyword to fixate the three eye position values.
+Target and experiment state string have to be configured to match the according timed-lables in the __.tsv__ file. They were either set by Tobii studio or OpenSesame. 
 
 ## 2) Configure Targets
 __EyeTargets.conf__
