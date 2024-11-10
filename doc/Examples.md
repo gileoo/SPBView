@@ -38,3 +38,18 @@ StatesExperiment = Instructions; start; Trial Start
 StatesTarget = Trial start; leftTarget; rightTarget; Target Off
 StatesEyeMovement = anti; pro
 ```
+
+2) Config Targets
+__EyeTargets.conf__
+```
+TargetName	PositionXPx	PositionYPx	Diameter
+start	960	540	30
+left	260	540	30
+right	1660	540	30
+off	960	540	30
+```
+Provide the target positions in pixel space of the shown target images. Each target type will split into the viewed time interval. Note, that the ordering in the __StateTarget__ above must follow the ordering of the lines in the __EyeTargets.conf__.
+
+3) Open SPB View
+
+Select the provided example file __example01-TimeLabels.tsv__. Or open it via the main menu: _File>Open_.
