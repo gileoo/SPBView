@@ -93,3 +93,30 @@ Export the analysis via the main menu: _Analysis>SaveAnalysis_.
 Note that some rows in the header are array-entered equations. To update them, they have to be focused in the _fx_ field and _shift-ctlr-enter_ has to be pressed.
 The excel spread sheet can be altered and used as a base for data import; e.g. into R-Studio or SPSS.
 Besides the __GazeMovement__ sheet there is also a sheet __Blinks__ listing all found blink events. 
+
+### GazeMovement 
+
+A list per target computed values is exported and stored starting from row 11. The following columns are collected:
+
+| name | column | descripton |
+| --- | --- | --- |
+| Event | A | Target event name. |
+| Substr1 | B | First two letters of the event name. |
+| Substr2 | C | Remaining letters of the event name. |
+| Label | D | List of time labels within the interval of the target event. |
+| ReactionTime | E | Reaction time of the event. A manually corrected value overrides the automatically computed one. |
+| TimeToFixation | F | Time till the first fixation interval is reach after a saccadic movement. |
+| TimeToFixationTarget | G | Time till the first fixation interval is reach after a saccadic movement. |
+| XErrorAtFiation | G | The average  error to a regression line within the fixation after the saccade. This measure describes how precicely a probant looks at the goal position regarding the x-axis (horizontal error). |
+| GainFirst | J | . |
+| GainBest | K | . |
+| NrOfCorrSacc | L | . |
+| SpeedMean | M | . |
+| SpeedMax | N | . |
+| Error | O | If not zero, this describes the error class of the target (1-8) or bad data (9).|
+
+
+
+
+
+
