@@ -107,7 +107,7 @@ A list per target computed values is exported and stored starting from row 11. T
 | ReactionTime | E | Reaction time of the event. A manually corrected value overrides the automatically computed one. |
 | TimeToFixation | F | Time till the first fixation interval is reach after a saccadic movement. |
 | TimeToFixationTarget | G | Time till the first fixation interval is reach after a saccadic movement AND the target is looked at correctly (error is small (< 3.0 degree)) |
-| XErrorAtFiation | G | The average  error to a regression line within the fixation after the saccade. This measure describes how precisely a proband looks at the goal position regarding the x-axis (horizontal error). |
+| XErrorAtFixation | G | The average  error to a regression line within the fixation after the saccade. This measure describes how precisely a proband looks at the goal position regarding the x-axis (horizontal error). |
 | GainFirst | J | Average error at first fixation. |
 | GainBest | K | Average error at target fixation. |
 | NrOfCorrSacc | L | Number of saccades going closer to the target. Count fixations as long as their average error gets smaller. |
