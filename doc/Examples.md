@@ -40,7 +40,7 @@ StatesTarget = Trial start; leftTarget; rightTarget; Target Off
 StatesEyeMovement = anti; pro
 ```
 In this example, we were only interested in the reaction times and not in the actual deviations from looking at a specific target. To minimize the data file sizes, we did not export the 3D eye positions for every time stamp, but replaced it by a constant but close to true value. Therefore, we used the _user-const_ keyword to fixate the three eye position values.
-Target and experiment state string have to be configured to match the according timed-lables in the __.tsv__ file. They were either set by Tobii studio or OpenSesame. 
+Target and experiment state string have to be configured to match the according timed-labels in the __.tsv__ file. They were either set by Tobii studio or OpenSesame. 
 
 
 ## 2) Configure Targets
@@ -65,16 +65,16 @@ Select the provided example file __example01-TimeLabels.tsv__. Or open it via th
 
  ![image](https://github.com/user-attachments/assets/3779e3c2-f2e5-45a6-818a-9204c2a405c6)
 
- Adjust the input field _Filter_ by 'left right'. To filter for all target containing 'left' or 'right' in its name. Then when pressing _space_/_backspace_ those targets will be visited only.
+Adjust the input field _Filter_ by 'left right'. To filter for all target containing 'left' or 'right' in its name. Then when pressing _space_/_backspace_ those targets will be visited only.
 
- Hold down the _shift_ key when hovering over the navgation bar between the blinks and the gaze view to adjust the scaling for the target recangles. Click on a colored rectangle to jump to that target.
+ Hold down the _shift_ key when hovering over the navigation bar between the blinks and the gaze view to adjust the scaling for the target rectangles. Click on a colored rectangle to jump to that target.
  
  ![image](https://github.com/user-attachments/assets/13dbbe16-ada1-41e1-b768-fe5173482ca8)
 
 
 ## 4) Correct Reaction Time or Error-Classify Targets
 
- Control all the targets of interst and manually adjust by either correcting the automatically detected reaction time, or label the whole target via an error class (_ctrl-1_ to _ctrl-0_); or as _bad data_ (_ctrl-B_). The reaction time is corrected by holding the _ctrl_ key and dragging in the gazew view from start to end (or vice versa); for the time coordinates (x-axis).
+Control all the targets of interest and manually adjust by either correcting the automatically detected reaction time, or label the whole target via an error class (_ctrl-1_ to _ctrl-0_); or as _bad data_ (_ctrl-B_). The reaction time is corrected by holding the _ctrl_ key and dragging in the gaze view from start to end (or vice versa); for the time coordinates (x-axis).
 
 ![image](https://github.com/user-attachments/assets/138797bf-8bdd-4e97-af86-6a66fd23a417)
 
@@ -85,7 +85,7 @@ If the reaction time was adjusted manually, the frame is colored in lila. Note t
 
 ## 5) Export Analysis
 
-Error classes are excluded in the analysis table output. Manual reaction time are used instead of the auto detected ones. Further, only target are exported that are white-listed in the _Filter_.
+Error classes are excluded in the analysis table output. Manual reaction time are used instead of the auto detected ones. Further, only targets are exported that are white-listed in the _Filter_.
 Export the analysis via the main menu: _Analysis>SaveAnalysis_.
 
 ![image](https://github.com/user-attachments/assets/95738e8e-a627-478c-99cb-4fc528b58c31)
@@ -98,7 +98,7 @@ Besides the __GazeMovement__ sheet there is also a sheet __Blinks__ listing all 
 
 A list per target computed values is exported and stored starting from row 11. The following columns are collected:
 
-| name | column | descripton |
+| name | column | description |
 | --- | --- | --- |
 | Event | A | Target event name. |
 | Substr1 | B | First two letters of the event name. |
@@ -106,22 +106,22 @@ A list per target computed values is exported and stored starting from row 11. T
 | Label | D | List of time labels within the interval of the target event. |
 | ReactionTime | E | Reaction time of the event. A manually corrected value overrides the automatically computed one. |
 | TimeToFixation | F | Time till the first fixation interval is reach after a saccadic movement. |
-| TimeToFixationTarget | G | Time till the first fixation interval is reach after a saccadic movement AND the target ist looked at coorectly (error is small (< 3.0 degree)) |
-| XErrorAtFiation | G | The average  error to a regression line within the fixation after the saccade. This measure describes how precicely a probant looks at the goal position regarding the x-axis (horizontal error). |
+| TimeToFixationTarget | G | Time till the first fixation interval is reach after a saccadic movement AND the target is looked at correctly (error is small (< 3.0 degree)) |
+| XErrorAtFiation | G | The average  error to a regression line within the fixation after the saccade. This measure describes how precisely a proband looks at the goal position regarding the x-axis (horizontal error). |
 | GainFirst | J | Average error at first fixation. |
 | GainBest | K | Average error at target fixation. |
 | NrOfCorrSacc | L | Number of saccades going closer to the target. Count fixations as long as their average error gets smaller. |
-| SpeedMean | M | Average overall speed in degrees per 20 miroseconds. |
-| SpeedMax | N | Maximum speed of target event in degrees per 20 mircoseconds.|
+| SpeedMean | M | Average overall speed in degrees per 20 microseconds. |
+| SpeedMax | N | Maximum speed of target event in degrees per 20 microseconds.|
 | Error | O | If not zero, this describes the error class of the target (1-8) or bad data (9).|
 
-On top of the data columns averages, standard deviations, and minimum/maximum values are shown. They are computed via excel formulas excluding data row classified as error. For the target column a filter is also used to match the target of interest (C5, D5) which shall match with the event name. The excel formulas can be adjusted, or data fileters applied for own fine tuning.
+On top of the data columns averages, standard deviations, and minimum/maximum values are shown. They are computed via excel formulas excluding data row classified as error. For the target column a filter is also used to match the target of interest (C5, D5) which shall match with the event name. The excel formulas can be adjusted, or data filters applied for own fine tuning.
 
 ### Blinks - Worksheet
 
-The blinks worksheet provied start and end times, durations, duration in between blinks in one target, the assiciated target nr and its ID.
+The blinks worksheet provides start and end times, durations, duration in between blinks in one target, the associated target nr and its ID.
 
-| name | column | descripton |
+| name | column | description |
 | --- | --- | --- |
 | BlinkNr | A | Number of the blink starting from 1. |
 | Start | B | Start time stamp. |
