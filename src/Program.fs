@@ -387,10 +387,10 @@ let main argv =
                 plotOpt "Intervals" Sc.Alt4
                 plotOpt "PupilSize" Sc.Alt5
                 plotOpt "LRegression" Sc.Alt6
-                plotOpt "NLRegression" Sc.Alt7
-                plotOpt "AInError" Sc.Alt8
-                plotOpt "AFromError" Sc.Alt9
-                plotOpt "AFullError" Sc.Alt0
+                // plotOpt "NLRegression" Sc.Alt7
+                // plotOpt "AInError" Sc.Alt8
+                // plotOpt "AFromError" Sc.Alt9
+                // plotOpt "AFullError" Sc.Alt0
             |]
 
             sub "Help" [|
