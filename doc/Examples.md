@@ -110,9 +110,9 @@ A list per target computed values is exported and stored starting from row 11. T
 | XErrorAtFiation | G | The average  error to a regression line within the fixation after the saccade. This measure describes how precicely a probant looks at the goal position regarding the x-axis (horizontal error). |
 | GainFirst | J | Average error at first fixation. |
 | GainBest | K | Average error at target fixation. |
-| NrOfCorrSacc | L | . |
-| SpeedMean | M | . |
-| SpeedMax | N | . |
+| NrOfCorrSacc | L | Number of saccades going closer to the target. Count fixations as long as their average error gets smaller. |
+| SpeedMean | M | Average overall speed in degrees per 20 miroseconds. |
+| SpeedMax | N | Maximum speed of target event in degrees per 20 mircoseconds.|
 | Error | O | If not zero, this describes the error class of the target (1-8) or bad data (9).|
 
 
