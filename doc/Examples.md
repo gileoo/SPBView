@@ -94,7 +94,7 @@ Note that some rows in the header are array-entered equations. To update them, t
 The excel spread sheet can be altered and used as a base for data import; e.g. into R-Studio or SPSS.
 Besides the __GazeMovement__ sheet there is also a sheet __Blinks__ listing all found blink events. 
 
-### GazeMovement 
+### GazeMovement - Worksheet
 
 A list per target computed values is exported and stored starting from row 11. The following columns are collected:
 
@@ -115,6 +115,21 @@ A list per target computed values is exported and stored starting from row 11. T
 | SpeedMax | N | Maximum speed of target event in degrees per 20 mircoseconds.|
 | Error | O | If not zero, this describes the error class of the target (1-8) or bad data (9).|
 
+On top of the data columns averages, standard deviations, and minimum/maximum values are shown. They are computed via excel formulas excluding data row classified as error. For the target column a filter is also used to match the target of interest (C5, D5) which shall match with the event name. The excel formulas can be adjusted, or data fileters applied for own fine tuning.
+
+### Blinks - Worksheet
+
+The blinks worksheet provied start and end times, durations, duration in between blinks in one target, the assiciated target nr and its ID.
+
+| name | column | descripton |
+| --- | --- | --- |
+| BlinkNr | A | Number of the blink starting from 1. |
+| Start | B | Start time stamp. |
+| End | C | End time stamp |
+| Duration | D | Duration in milliseconds. |
+| Inbetween | E | Time between consecutive blinks in one target. |
+| TargetID | F | Target ID (name) of the target event. |
+| TargetNr | G | Target Nr of the blink. |
 
 
 
