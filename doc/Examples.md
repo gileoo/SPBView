@@ -130,8 +130,3 @@ The blinks worksheet provides start and end times, durations, duration in betwee
 | Inbetween | E | Time between consecutive blinks in one target. |
 | TargetID | F | Target ID (name) of the target event. |
 | TargetNr | G | Target Nr of the blink. |
-
-
-
-
-
