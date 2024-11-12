@@ -67,7 +67,7 @@ Select the provided example file __example01-TimeLabels.tsv__. Or open it via th
 
 Adjust the input field _Filter_ by 'left right'. To filter for all target containing 'left' or 'right' in its name. Then when pressing _space_/_backspace_ those targets will be visited only.
 
- Hold down the _shift_ key when hovering over the navigation bar between the blinks and the gaze view to adjust the scaling for the target rectangles. Click on a colored rectangle to jump to that target.
+Hold down the _shift_ key when hovering over the navigation bar between the blinks and the gaze view to adjust the scaling for the target rectangles. Click on a colored rectangle to jump to that target.
  
  ![image](https://github.com/user-attachments/assets/13dbbe16-ada1-41e1-b768-fe5173482ca8)
 
