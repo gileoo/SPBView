@@ -106,10 +106,10 @@ A list per target computed values is exported and stored starting from row 11. T
 | Label | D | List of time labels within the interval of the target event. |
 | ReactionTime | E | Reaction time of the event. A manually corrected value overrides the automatically computed one. |
 | TimeToFixation | F | Time till the first fixation interval is reach after a saccadic movement. |
-| TimeToFixationTarget | G | Time till the first fixation interval is reach after a saccadic movement. |
+| TimeToFixationTarget | G | Time till the first fixation interval is reach after a saccadic movement AND the target ist looked at coorectly (error is small (< 3.0 degree)) |
 | XErrorAtFiation | G | The average  error to a regression line within the fixation after the saccade. This measure describes how precicely a probant looks at the goal position regarding the x-axis (horizontal error). |
-| GainFirst | J | . |
-| GainBest | K | . |
+| GainFirst | J | Average error at first fixation. |
+| GainBest | K | Average error at target fixation. |
 | NrOfCorrSacc | L | . |
 | SpeedMean | M | . |
 | SpeedMax | N | . |
