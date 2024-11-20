@@ -10,6 +10,7 @@ xcopy Accord.dll.config %1
 xcopy ExperimentSetup.conf %1
 xcopy EyeTargets.conf %1
 xcopy InputData.conf %1
+xcopy Media.conf %1
 xcopy SPBView.exe %1
 xcopy SPBView.exe.config %1
 
@@ -29,6 +30,7 @@ xcopy Accord.dll.config %1
 xcopy ExperimentSetup.conf %1
 xcopy EyeTargets.conf %1
 xcopy InputData.conf %1
+xcopy Media.conf %1
 xcopy SPBView.exe %1
 xcopy SPBView.exe.config %1
 
