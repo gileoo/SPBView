@@ -12,7 +12,7 @@ See [manual](https://github.com/gileoo/SPBView/blob/master/doc/Manual.md) for mo
 
 Planed related reference publication:
 
-Ritter M., Hoffmann A., Rauch N., Sachse P., Djamshidian A., Harders M., Ellmerer Ph. (2024), SPBView: An Extendable Data Analysis and Combined Visualization Tool for Saccadic Eye-Movement, Pupil Size, and Blink Detection, Elseviere Software X, doi:XXXX (in submission).
+Ritter M., Hoffmann A., Rauch N., Sachse P., Djamshidian A., Harders M., Ellmerer Ph. (2024), __SPBView: An Extendable Data Analysis and Combined Visualization Tool for Saccadic Eye-Movement, Pupil Size, and Blink Detection__. Elseviere Software X, doi:XXXX (in submission).
 
 ## List of Publications that used SPBView
 
