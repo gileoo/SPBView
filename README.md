@@ -18,6 +18,9 @@ Ritter M., Hoffmann A., Rauch N., Sachse P., Djamshidian A., Harders M., Ellmere
 
 Hoffmann, A., Schellhorn, A.-M., Ritter, M., Sachse, P., & Maran, T. (2023). __Blink Synchronization Increases Over Time and Predicts Problem-Solving Performance in Virtual Teams__. Small Group Research, 0(0). doi: 10.1177/10464964231195618
 
+Hoffmann, A., Nolte, J., Sachse, P. (2022). __Variation in antisaccadic response latencies investigated with the hierarchical LATER process model__.
+Brain and Cognition. Volume 158. https://doi.org/10.1016/j.bandc.2022.105850.
+
 Carbone F., Zamarian L., Rass V., Bair S., Ritter M., Beer R., Mahlknecht P., Heim B., Limmert V., Peball M., Ellmerer P., Schiefecker A., Kofler M., Lindner A., Pfausler B., Patnuna L., Kindl P., Löffer-Ragg J., Kiechl S., Seppi K., Djamshidian A., Helbok R. (2022). __Cognitive dysfunction 1 year after COVID-19: evidence from eye tracking__. Annals of Clinical and Translational Neurology. doi: 10.1002/acn3.51675
 
 Ellmerer P., Peball M., Carbone F., Ritter M., Heim B., Marini K., Valent D., Krismer F., Poewe W., Djamshidian A., Seppi K. (2022). __Eye Tracking in Patients with Parkinson’s Disease Treated with Nabilone–Results of a Phase II, Placebo-Controlled, Double-Blind, Parallel-Group Pilot Study__. Brain Sciences. doi: 10.3390/brainsci12050661
