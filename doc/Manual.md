@@ -125,7 +125,7 @@ When all target data was double checked, classified, and maybe manually correcte
 ``` 
     Analysis > SaveAnalysis
 ```
-A save file dialog enables to define the locate an name of the spread sheet output as .xslx file; to be opened in e.g. excel.
+A save file dialog enables to define the locate an name of the spread sheet output as .xslx file; to be opened in e.g. excel. See [examlpes](Examples.md), section 5 for a description of the data analysis. 
 
 Note, that there are the two sheets __GazeMovement__ and __Blinks__ with related tables. One field with in table statistics is not automatically updated at the moment. To trigger the computation of the standard deviation one has to click into the cell and press ctrl-shift-enter. Array type equations are currently not updated automatically in excel on file open.
 
