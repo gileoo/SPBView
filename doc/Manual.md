@@ -88,8 +88,8 @@ Target_lif.jpg	left
 Target_lis.jpg	left
 Target_ref.jpg	right
 Target_res.jpg	right
-Targetf.jpg	off	3
-Targets.jpg	off	3
+Targetf.jpg	off
+Targets.jpg	off
 ```
 
 Note: TargetName in the two configs must match!
