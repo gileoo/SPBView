@@ -14,7 +14,7 @@ See [manual](https://github.com/gileoo/SPBView/blob/master/doc/Manual.md) for mo
 
 Ritter M., Hoffmann A., Rauch N., Sachse P., Djamshidian A., Harders M., Ellmerer Ph. (2024), __SPBView: An Extendable Data Analysis and Combined Visualization Tool for Saccadic Eye-Movement, Pupil Size, and Blink Detection__. Elseviere Software X, doi:XXXX (in submission).
 
-### List of Publications that used SPBView
+### List of publications that used SPBView
 
 Hoffmann, A., Schellhorn, A.-M., Ritter, M., Sachse, P., & Maran, T. (2023). __Blink Synchronization Increases Over Time and Predicts Problem-Solving Performance in Virtual Teams__. Small Group Research, 55(5), 706-728.  
 https://doi.org/10.1177/10464964231195618
