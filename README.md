@@ -22,7 +22,7 @@ Carbone F., Zamarian L., Rass V., Bair S., Ritter M., Beer R., Mahlknecht P., He
 
 Ellmerer P., Peball M., Carbone F., Ritter M., Heim B., Marini K., Valent D., Krismer F., Poewe W., Djamshidian A., Seppi K. (2022). __Eye Tracking in Patients with Parkinson’s Disease Treated with Nabilone–Results of a Phase II, Placebo-Controlled, Double-Blind, Parallel-Group Pilot Study__. Brain Sciences. doi: 10.3390/brainsci12050661
 
-Hoffmann A., Büsel C., Ritter M., Sachse M. (2021). __Do emotional stimuli interfere with response inhibition? Evidence from the antisaccade paradigm__. Cognition and Emotion. doi: 10.1080/02699931.2021.1979475.
+Hoffmann, A., Büsel, C., Ritter, M., & Sachse, P. (2021). __Do emotional stimuli interfere with response inhibition? Evidence from the antisaccade paradigm__. Cognition and Emotion, 35(8), 1626-1633. https://doi.org/10.1080/02699931.2021.1979475
 
 Carbone F., Ellmerer Ph., Ritter M., Spielberger S., Mahlknecht Ph., Hametner E., Hussl A., Hotter A., Granata R., Seppi K., Boesch S., Poewe W., Djamshidian A. (2021). __Impaired Inhibitory Control of Saccadic Eye Movements in Cervical Dystonia: An Eye‐Tracking Study__. Movement Disorders, doi: 10.1002/mds.28486.
 
