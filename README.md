@@ -37,6 +37,8 @@ https://doi.org/10.1080/02699931.2021.1979475
 Carbone F., Ellmerer Ph., Ritter M., Spielberger S., Mahlknecht Ph., Hametner E., Hussl A., Hotter A., Granata R., Seppi K., Boesch S., Poewe W., Djamshidian A. (2021). __Impaired Inhibitory Control of Saccadic Eye Movements in Cervical Dystonia: An Eye‐Tracking Study__. Movement Disorders.  
 https://doi.org/10.1002/mds.28486.
 
-Ellmerer P., Carbone F., Heim, B., Ritter M., Peball M., Spielberger A., Seppi K., Djamshidian A. (2021). __Impaired saccadic inhibition in Huntington mutation carriers__. Movment Disorders, 36 (suppl 1).
+Ellmerer P., Carbone F., Heim, B., Ritter M., Peball M., Spielberger A., Seppi K., Djamshidian A. (2021). __Impaired saccadic inhibition in Huntington mutation carriers__. Movment Disorders, 36 (suppl 1).  
+https://www.mdsabstracts.org/abstract/impaired-saccadic-inhibition-in-huntington-mutation-carriers
 
-Carbone F., Ellmerer P., Spielberger S., Peball M., Sidoroff V., Ritter M., Seppi K., Poewe W., Djamshidian, A. (2021). __Effect of oxytocin on response inhibition in Parkinson´s disease: a pilot study__. In: Proceedings of the MDS Virtual Congress 2021, Vol. 36, No. 469. (Web link)
+Carbone F., Ellmerer P., Spielberger S., Peball M., Sidoroff V., Ritter M., Seppi K., Poewe W., Djamshidian, A. (2021). __Effect of oxytocin on response inhibition in Parkinson´s disease: a pilot study__. In: Proceedings of the MDS Virtual Congress 2021, Vol. 36, No. 469.  
+https://www.mdsabstracts.org/abstract/effect-of-oxytocin-on-response-inhibition-in-parkinsons-disease-a-pilot-study
