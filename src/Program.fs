@@ -50,9 +50,12 @@ let main argv =
             | Some x -> Some x 
             | None -> bind ()
 
-        IO.openLastSession ()
-        |> bindNone IO.sessionFromFileDialog
+        // IO.openLastSession ()
+        // |> bindNone 
+        
+        IO.sessionFromFileDialog()
         |> Option.map (UiState.create IO.plotConfig IO.stateSkipError IO.stateTargetNr) 
+
 
     // -- prepare view for gaze plots
     let gazePlotFigure  = new PlotModel()
