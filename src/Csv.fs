@@ -74,15 +74,24 @@ type labelStates =
 //    returns an array of EyesSnapshots, a count of invalid lines, 
 //    and an array of target-file names
 
+let clearMediaName (mName:string) =
+    if mName.Contains("(") || mName.Contains(".") then
+        let idx = mName.IndexOfAny([|'('; '.'|])
+        mName.Substring(0, idx)
+    else
+        mName
+
 let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<string, (string * int)>)=
     let mutable countInvalids = 0
     let mutable media = Map.empty
 
     let mutable patientName = ""
+    let mutable timeComments = List.empty
 
-    let mediaToTarget (key) = 
-        if mediaToTarget.ContainsKey(key) then
-            snd (mediaToTarget.TryGetValue key)
+    let clearedMediaToTarget (key) =
+        let clearedKey = clearMediaName key
+        if mediaToTarget.ContainsKey(clearedKey) then
+            snd (mediaToTarget.TryGetValue clearedKey)
         else
            ("", -1)
 
@@ -146,7 +155,7 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
                     media <- Map.add mediaName id media 
                     id
 
-            let targetName = mediaToTarget mediaName
+            let targetName = clearedMediaToTarget mediaName
 
             let timeTarget = 
                 {
@@ -217,7 +226,7 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
     let mediaArr = Array.init media.Count (fun x -> "" )
     media
     |> Map.iter (fun k v -> 
-        let mediaName, mediaNr = mediaToTarget k
+        let mediaName, mediaNr = clearedMediaToTarget k
         if mediaNr > -1 then
             mediaArr.[v] <- sprintf "%s (%d) %s" mediaName mediaNr k
         else
@@ -520,12 +529,12 @@ let private loadTargetMedia (uri:string) (targets:Target[]): Dictionary<string, 
         |> Seq.iteri( fun i x -> 
             let readInt32 (s:string) = System.Int32.Parse (x.GetColumn s)
 
-            let mediaName = x.GetColumn "MediaName"
+            let mediaName = clearMediaName (x.GetColumn "MediaName")
             let targetName = x.GetColumn "TargetName"
 
             let nr = 
                 loadedTargetNames 
-                |> Array.tryFindIndex (fun x -> targetName = x)
+                |> Array.tryFindIndex (fun x -> targetName.ToLower().Contains(x.ToLower()))
 
             let targetNr = 
                 match nr with
