@@ -101,9 +101,9 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
             if i % 500 = 0 then printf "."
             let getColumn c = 
                 let mappedColName = (getCol c)
-                // printfn "getting: %s -> %s" c mappedColName 
+                //printfn "getting: %s -> %s" c mappedColName 
                 if mappedColName = "" then 
-                    failwith (sprintf "unsupported column header %s" mappedColName)
+                    failwith (sprintf "unsupported column header '%s' -> '%s'" c mappedColName)
                 if mappedColName.Contains("user-const") then
                     mappedColName.Substring(10)
                 else
@@ -143,6 +143,9 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
 
             let timeStamp = float (System.UInt64.Parse (getColumn CV.RecordingTimestamp))
 
+            let eventLabel = getColumn CV.Event
+            if eventLabel <> "" then
+                timeComments <- List.append timeComments [(timeStamp,eventLabel)]
 
             // check for media file
             let mediaName = getColumn CV.PresentedMediaName
@@ -217,10 +220,11 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
                                      | x -> EyeEvent.Unknown x)
                         } 
 
-                    { timeTarget= timeTarget; eyes= eyes; comment = "" }
+                    { timeTarget= timeTarget; eyes= eyes; comment = if eventLabel <> "" then "userEvent" else "" }
             else
-                { timeTarget= timeTarget; eyes= EyesData.Zero; comment = "" }
+                { timeTarget= timeTarget; eyes= EyesData.Zero; comment = if eventLabel <> "" then "userEvent" else "" }
             )
+        |> Seq.filter( fun x -> x.comment <> "userEvent")
         |> Seq.toArray
 
     let mediaArr = Array.init media.Count (fun x -> "" )
@@ -233,7 +237,12 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
             mediaArr.[v] <- k
         )
 
-    (data, countInvalids, mediaArr, patientName, Array.empty)
+    let timeLabels =
+        timeComments
+        |> List.sortBy( fun (x,_) -> x )
+        |> List.toArray
+
+    (data, countInvalids, mediaArr, patientName, timeLabels)
 
 // -- data reading function
 //    generates and fills the eye tracking data types
