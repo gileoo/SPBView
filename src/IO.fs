@@ -62,27 +62,35 @@ let private showSaveFileDialog (title) (filename) (fileExtensions) =
 
 
 let public showOpenFileDialog (title) (filename) (fileExtensions) =
-    let ofd = new OpenFileDialog()
-    ofd.Title <- title
-    ofd.InitialDirectory <- Path.GetDirectoryName openPath
-    ofd.RestoreDirectory <- true
-    ofd.FileName <- filename
-    ofd.Filter <- String.Join("|", fileExtensions |> Seq.map (fun (d, e, _) -> sprintf "%s|*.%s" d e))
-    ofd.FilterIndex <- 1
-    if ofd.ShowDialog() = DialogResult.OK then
-        openPath <- ofd.FileName
-        try
-            let (_, _, f) =
-                fileExtensions
-                |> List.item (ofd.FilterIndex - 1)
-            Some (ofd.FileName, f ofd.FileName)
-        with
-        | error ->
-            MessageBox.Show( "Error opening file on disk! " + error.Message ) |> ignore
-            failwith error.Message
+    try
+        let ofd = new OpenFileDialog()
+        ofd.Title <- title
+        ofd.InitialDirectory <- Path.GetDirectoryName openPath
+        ofd.RestoreDirectory <- true
+        ofd.FileName <- filename
+        ofd.Filter <- String.Join("|", fileExtensions |> Seq.map (fun (d, e, _) -> sprintf "%s|*.%s" d e))
+        ofd.FilterIndex <- 1
+
+        if ofd.ShowDialog() = DialogResult.OK then
+            openPath <- ofd.FileName
+            try
+                let (_, _, f) =
+                    fileExtensions
+                    |> List.item (ofd.FilterIndex - 1)
+                Some (ofd.FileName, f ofd.FileName)
+            with
+            | error ->
+                MessageBox.Show( "Error opening file on disk 1! " + error.Message ) |> ignore
+                failwith error.Message
+                None
+        else
             None
-    else
+    with
+    | error ->
+        MessageBox.Show( "Error opening file '" + filename +  "' on disk, no Input Data file? " + error.Message ) |> ignore
         None
+
+        
 
 let public showOpenMultiFileDialog (title) (filename) (fileExtensions) =
     let ofd = new OpenFileDialog()
