@@ -138,9 +138,8 @@ let openLastSession () =
 // -- open file dialog to load a session file
 let sessionFromFileDialog () =
     showOpenFileDialog "Save Session" "" [
-        ("Tobii Eyetracker Data File", "tsv", fun filename ->
-            openSession filename
-        )
+        "Tobii Eyetracker Data File", "tsv", fun filename -> openSession filename
+        "Comma Seperated Data File", "csv", fun filename -> openSession filename
     ]
     |> Option.map snd
 
