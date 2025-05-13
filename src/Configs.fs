@@ -220,7 +220,7 @@ let readExpSetupFile() =
         Device = device }
 
     with
-    | :? FileNotFoundException -> failwith (sprintf "file not found: %s" filePathExpSetup)
+    | :? FileNotFoundException -> failwith (sprintf "Experiment config file not found: %s" filePathExpSetup)
 
 
 
@@ -287,14 +287,29 @@ let readColumnsAndStatesNames() =
 
     with 
     | :? FileNotFoundException -> 
-        failwith (sprintf "%s file not found" filePathInputData)
+        failwith (sprintf "Input Data config file '%s' not found" filePathInputData)
         // TODO: load defaults here
     
 
-
 let GlobalCfg = 
+
+    let progState = readIniFile()
+    #if DEBUG
+    printfn "read progState %A" progState
+    #endif
+
+    let expSetup = readExpSetupFile()
+    #if DEBUG
+    printfn "read expSetup %A" expSetup
+    #endif
+
+    let inputData = readColumnsAndStatesNames()
+    #if DEBUG
+    printfn "read inputData %A" inputData
+    #endif
+
     {
-        ProgramState = readIniFile()
-        ExpSetup = readExpSetupFile()
-        InputData = readColumnsAndStatesNames()
+        ProgramState = progState
+        ExpSetup = expSetup
+        InputData = inputData
     }
