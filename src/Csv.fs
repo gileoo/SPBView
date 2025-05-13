@@ -473,7 +473,7 @@ let private loadTargets (uri:string) =
 
                 let readUInt64 (s:string) = System.UInt64.Parse (x.GetColumn s)
 
-                let prefix = x.GetColumn "TargetName"
+                let prefix = x.GetColumn "Prefix"
 
                 let pPx =
                     if isPx then 
