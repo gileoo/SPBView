@@ -126,7 +126,7 @@ let evalTargetEvents (s:Session) (idx) =
 
     // -- compute direction as vector and index // !!!!
 
-    if s.Targets.ChangesValid.Length < 2 then 
+    if s.Targets.ChangesValid.Length < 2 || idx >= s.Targets.ChangesValid.Length || idx < 0 then 
         Seq.empty
     else
 
