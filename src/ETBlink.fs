@@ -469,7 +469,35 @@ let showBlinkPlots (data:BTarget[]) (intervals:BIntervalData[]) (smoothed:PupilD
        
     ()
 
-let hershIntervals (dataTimeStamps:float[]) (dataPupils:float32[]) (intervals : list<BIntervalData>) =
+let BIntervalDataAsTsv (filePath) (bIntervals:BIntervalData[]) (inbetweenArr:float[])=
+    let mutable tsvLines = List.Empty
+    tsvLines <- tsvLines @ [ BIntervalData.TsvHeader() ]
+
+    bIntervals 
+    |> Array.iteri( fun i x -> 
+        printfn "%d: %s, inbetween: %f" i (x.toStr()) (inbetweenArr.[i])
+        tsvLines <- tsvLines @ [ x.toTsvStr(inbetweenArr.[i]) ]
+        )
+
+    IO.File.WriteAllLines(filePath, tsvLines)
+
+let getValidIntervalsAndInbetweens (intervals) =
+    let validIntArr = 
+        intervals
+        |> Seq.filter( fun x -> x.iType = EyeEvent.Blink)
+        |> Seq.toArray
+
+    let inbetweenArr =
+        validIntArr
+        |> Array.mapi( fun i x -> 
+            if i > 0 then
+                x.time.Start - validIntArr.[i-1].time.End
+            else
+                0.0
+                )
+    (validIntArr, inbetweenArr)
+
+let hershIntervals (dataTimeStamps:float[]) (dataPupils:float32[]) (intervals : BIntervalData[]) =
     let validIntArr = 
         intervals
         |> Seq.filter( fun x -> x.iType = EyeEvent.Blink)
@@ -505,11 +533,15 @@ let hershIntervals (dataTimeStamps:float[]) (dataPupils:float32[]) (intervals : 
         else 
             mergedValids <- mergedValids @ [x]
         )
-    
-    
+   
+  
     validIntArr 
     |> Array.iteri( fun i x -> 
-        printfn "%d: %s, inbetween: %f" i (x.toStr()) (inbetweenArr.[i]))
+        printfn "%d: %s, inbetween: %f" i (x.toStr()) (inbetweenArr.[i])
+        )
+
+
+
 
     
     let lerp (x0:float32) (y0:PupilDiameter) x1 (y1:PupilDiameter) x =
@@ -542,7 +574,7 @@ let hershIntervals (dataTimeStamps:float[]) (dataPupils:float32[]) (intervals : 
         validIntArr 
         |> correctViaHershmann dataTimeStamps dataPupils 50.0  
 
-    (correctedIntArr, smoothed, diffed)
+    (correctedIntArr, inbetweenArr, smoothed, diffed)
 
 
     //                         time*validity 
@@ -595,7 +627,8 @@ let getIntervals (errArr:(float*bool)[]) =
 let processForBlinks (blinkFile) =
     printfn "blinkFile: %s" blinkFile
     
-    let tsvFile = CsvFile.Load( blinkFile ) 
+    let cleanedFile = Csv.cleanHashCommentsFromASCIIFile (blinkFile)
+    let tsvFile = CsvFile.Load( cleanedFile ) 
             
     printfn "Rows: %d" (Seq.length tsvFile.Rows)
 
@@ -666,18 +699,25 @@ let processForBlinks (blinkFile) =
         |> Seq.map( fun x -> (x.RecordingTimeStamp, x.ValidLeft) )
         |> Seq.toArray
         |> getIntervals
+        |> Seq.toArray
 
     let intervalsRight =
         data
         |> Seq.map( fun x -> (x.RecordingTimeStamp, x.ValidRight) )
         |> Seq.toArray
         |> getIntervals
+        |> Seq.toArray
 
     let intervalsAvg =
         data
         |> Seq.map( fun x -> (x.RecordingTimeStamp, x.ValidBoth) )
         |> Seq.toArray
         |> getIntervals
+        |> Seq.toArray
+
+    let intArrRawLeft, inbetweenRawLeft = getValidIntervalsAndInbetweens intervalsLeft
+    let intArrRawRight, inbetweenRawRight = getValidIntervalsAndInbetweens intervalsRight
+    let intArrRawAvg, inbetweenRawAvg = getValidIntervalsAndInbetweens intervalsAvg
 
     let allRecTimeStamps =  data |> Array.map( fun x -> x.RecordingTimeStamp)
 
@@ -685,10 +725,23 @@ let processForBlinks (blinkFile) =
     let allPupilsRight =  data |> Array.map( fun x -> x.PupilDia.Right )
     let allPupilsAvg   =  data |> Array.map( fun x -> x.PupilDia.Avg )
 
-    let hershyLeft, _, _  = hershIntervals allRecTimeStamps allPupilsLeft intervalsLeft
-    let hershyRight, _, _ = hershIntervals allRecTimeStamps allPupilsRight intervalsRight
-    let hershyAvg, _, _  = hershIntervals allRecTimeStamps allPupilsAvg intervalsAvg
+    let hershyLeft, inbetweenHLeft, _, _  = hershIntervals allRecTimeStamps allPupilsLeft intervalsLeft
+    let hershyRight,inbetweenHRight, _, _ = hershIntervals allRecTimeStamps allPupilsRight intervalsRight
+    let hershyAvg, inbetweenHAvg, _, _  = hershIntervals allRecTimeStamps allPupilsAvg intervalsAvg
 
+    let filePathTsvHLeft = IO.Path.GetFullPath(blinkFile).Split('.').[0] + "_Blinks_HershLeft.tsv" 
+    BIntervalDataAsTsv filePathTsvHLeft hershyLeft inbetweenHLeft
+    let filePathTsvHRight = IO.Path.GetFullPath(blinkFile).Split('.').[0] + "_Blinks_HershRight.tsv" 
+    BIntervalDataAsTsv filePathTsvHRight hershyRight inbetweenHRight
+    let filePathTsvHAvg = IO.Path.GetFullPath(blinkFile).Split('.').[0] + "_Blinks_HershBoth.tsv" 
+    BIntervalDataAsTsv filePathTsvHAvg hershyAvg inbetweenHAvg
+
+    let filePathTsvRLeft = IO.Path.GetFullPath(blinkFile).Split('.').[0] + "_Blinks_RawLeft.tsv" 
+    BIntervalDataAsTsv filePathTsvRLeft intArrRawLeft inbetweenRawLeft
+    let filePathTsvRRight = IO.Path.GetFullPath(blinkFile).Split('.').[0] + "_Blinks_RawRight.tsv" 
+    BIntervalDataAsTsv filePathTsvRRight intArrRawRight inbetweenRawRight
+    let filePathTsvRAvg = IO.Path.GetFullPath(blinkFile).Split('.').[0] + "_Blinks_RawBoth.tsv" 
+    BIntervalDataAsTsv filePathTsvRAvg intArrRawAvg inbetweenRawAvg
 
 (*
     let excelName = blinkFile.Substring(0, blinkFile.Length-3) + "xlsx"
@@ -715,13 +768,20 @@ let processForBlinks (blinkFile) =
     printfn "saved: %A" tsvName
     ()
         
+(*
+showOpenFileDialog "Save Session" "" [
+    "Tobii Eyetracker Data File", "tsv", fun filename -> openSession filename
+    "Comma Seperated Data File", "csv", fun filename -> openSession filename
+]
+*)
+
 let allBlinkHack(files : string[]) =
     let blinkFiles = 
         if files.Length = 0 then
             IO.showOpenMultiFileDialog "Select BlinkFile" "" [
-                ("Mobile Tobii Eyetracker Data File", "tsv", fun filename ->
-                    filename
-                ) ]
+                "Mobile Tobii Eyetracker Data File", "tsv", fun filename -> filename
+                "Comma Seperated Data File", "csv", fun filename -> filename
+                ]
             |> Option.map snd
         else
             let checkedFiles =

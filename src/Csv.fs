@@ -9,6 +9,19 @@ open ETData
 open ETReaction
 open Configs
 
+let cleanHashCommentsFromASCIIFile filePath =
+    let pre = Path.GetFullPath(filePath).Split('.').[0]
+    let cleanPath = pre  + "_c" + Path.GetExtension(filePath)
+
+    if (File.Exists(cleanPath)) || filePath.Contains("_c") then
+        filePath
+    else 
+        let cleanedLines = 
+            File.ReadLines (filePath)
+            |> Seq.filter( fun x -> not (x.Trim().[0] = '#'))
+        File.WriteAllLines (cleanPath, cleanedLines)
+        cleanPath
+
 let getCol s = 
     if GlobalCfg.InputData.ColsNamesCSV.ContainsKey s then
         let ret = GlobalCfg.InputData.ColsNamesCSV.TryGetValue s 
@@ -703,7 +716,9 @@ let private makeSession
 let getSession (uri:string) (targetUri:string) (mediaUri:string) (* statesUri *) =
     if GlobalCfg.InputData.ColsNamesCSV.Count = 0  then failwith "No config loaded"
         
-    let tsvFile = CsvFile.Load( uri ) 
+    let cleanedUri = cleanHashCommentsFromASCIIFile( uri )
+
+    let tsvFile = CsvFile.Load( cleanedUri )
 
     let listEmpty (lst:list<string>) = 
         if lst.Length = 1 then 

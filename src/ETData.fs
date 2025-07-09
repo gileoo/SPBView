@@ -149,6 +149,12 @@ type BIntervalData =
     member x.toStr () =
         sprintf "(%f - %f), duration: %f, idxRangeRaw: %d-%d" x.time.Start x.time.End (x.time.End-x.time.Start) (x.idxRangeRaw.Start) (x.idxRangeRaw.End)
 
+    static member TsvHeader() =
+        "Start time\tEnd time\tDuration\tStart index\tEnd index\tInbetween"
+
+    member x.toTsvStr(inbetween) =
+        sprintf "%f\t%f\t%f\t%d\t%d\t%f" x.time.Start x.time.End (x.time.End-x.time.Start) (x.idxRangeRaw.Start) (x.idxRangeRaw.End) inbetween
+
 // -- final high level type representing one experiment
 type Session =
     {
