@@ -359,6 +359,20 @@ let main argv =
                     if res = DialogResult.OK && not (System.String.IsNullOrWhiteSpace(ofd.SelectedPath)) then
                         DataPreps.fixEyeTOBIIOutput ofd.SelectedPath subdirs
                     )
+                action "ConcatMultipleFilesInPathUniqueHeader" Sc.CtrlShiftE (fun() ->
+                    let ofd = new System.Windows.Forms.FolderBrowserDialog()
+                    let res = ofd.ShowDialog()
+                    if res = DialogResult.OK && not (System.String.IsNullOrWhiteSpace(ofd.SelectedPath)) then
+                        printfn "path: %A" ofd.SelectedPath
+                        let lastDirSplitIdx = ofd.SelectedPath.LastIndexOf('\\')
+                        let pathBefore = ofd.SelectedPath.Substring(0, lastDirSplitIdx)
+                        let dirName = ofd.SelectedPath.Substring(lastDirSplitIdx+1)
+                        printfn "pathBefore: %A" pathBefore
+                        printfn "dirName: %A" dirName
+                        let outFile = Path.Combine(pathBefore, (sprintf "%s.tsv" dirName) )
+                        let workFiles = IO.Directory.GetFiles( ofd.SelectedPath )
+                        DataPreps.concatMultipleTSVs workFiles outFile
+                    )
             |]
 
             sub "Target" [|

@@ -414,6 +414,29 @@ let twoRowsToOneRow filePath postFix1 postFix2 =
 
     File.WriteAllLines(Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath) + "AB.txt"), List.toArray outLines)
     
+
+let concatMultipleTSVs (files:string[]) outFile =   
+    let mutable outLines = list.Empty
+
+    files
+    |> Array.iteri( fun i x -> 
+        printfn "doing: %A" x 
+        let lines = File.ReadAllLines(x)
+        if i = 0 then 
+            outLines <- outLines @ [ lines.[0] ] // grab header
+            printfn "header: %A" lines.[0]
+        else
+            lines
+            |> Array.iteri( fun j y -> 
+                if j > 0 && y.Trim() <> "" then 
+                    outLines <- outLines @ [ y ])
+
+        )
+
+    printfn "Writing: %A" outFile
+    File.WriteAllLines(outFile, List.toArray outLines)
+        
+
 (*
 // [<EntryPoint>]
 let main argv =
