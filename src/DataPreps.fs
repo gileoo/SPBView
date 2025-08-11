@@ -433,14 +433,14 @@ let concatMultipleTSVs (files:string[]) outFile =
         if i = 0 then 
             outLines <- outLines @ [ "Participant\t" + lines.[0] ] // grab header
             printfn "header: %A" lines.[0]
-            participantName <- extractParticipantAsFileNamePrefix x [|'-'; '_'|] 2
-            printfn "participantName: %A"participantName
+
         else
             lines
             |> Array.iteri( fun j y -> 
-                if j > 0 && y.Trim() <> "" then 
+                if j > 0 && y.Trim() <> "" then
+                    participantName <- extractParticipantAsFileNamePrefix x [|'-'; '_'|] 3
+                    printfn "participantName: %A"participantName
                     outLines <- outLines @ [ participantName + "\t" + y ])
-
         )
 
     printfn "Writing: %A" outFile
