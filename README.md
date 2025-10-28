@@ -16,7 +16,8 @@ Ritter M., Hoffmann A., Rauch N., Sachse P., Djamshidian A., Harders M., Ellmere
 
 ### List of publications that used SPBView
 
-Hoffmann, A., Schellhorn, A.-M., Ritter, M., Sachse, P., & Maran, T. (2023). __Blink Synchronization Increases Over Time and Predicts Problem-Solving Performance in Virtual Teams__. Small Group Research, 55(5), 706-728, [10.1177/10464964231195618](https://doi.org/10.1177/10464964231195618). [Best Paper Award 2025 - Small Group Research Journal](https://journals.sagepub.com/page/sgr/collections/awards)
+Hoffmann, A., Schellhorn, A.-M., Ritter, M., Sachse, P., & Maran, T. (2023). __Blink Synchronization Increases Over Time and Predicts Problem-Solving Performance in Virtual Teams__. Small Group Research, 55(5), 706-728, [10.1177/10464964231195618](https://doi.org/10.1177/10464964231195618). 
+[Best Paper Award 2025 - Small Group Research Journal](https://journals.sagepub.com/page/sgr/collections/awards)
 
 Hoffmann, A., Nolte, J., Sachse, P. (2022). __Variation in antisaccadic response latencies investigated with the hierarchical LATER process model__. Brain and Cognition. Volume 158. [10.1016/j.bandc.2022.105850](https://doi.org/10.1016/j.bandc.2022.105850)
 
