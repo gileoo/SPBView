@@ -172,6 +172,7 @@ let private getFileAsArrayMediaChange (file:CsvFile) (mediaToTarget:Dictionary<s
                     id
 
             let targetName = clearedMediaToTarget mediaName
+            // printfn "Media name %A %A" mediaName targetName
 
             let timeTarget = 
                 {
@@ -556,7 +557,7 @@ let private loadTargetMedia (uri:string) (targets:Target[]): Dictionary<string, 
 
             let nr = 
                 loadedTargetNames 
-                |> Array.tryFindIndex (fun x -> targetName.ToLower().Contains(x.ToLower()))
+                |> Array.tryFindIndex (fun x -> targetName.ToLower() = (x.ToLower()))
 
             let targetNr = 
                 match nr with
