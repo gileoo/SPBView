@@ -34,14 +34,16 @@ let fixEyeTrackingFile (basePath:string) (subdir:string) (file:string) =
 
     let mutable skipNext = 0
 
+    (*
     let correctTabs1 =
         lines
         |> Array.splitAt( 17 )
         |> snd
         |> Array.filter( fun x -> x <> "" )
+    *)
 
     let correctTabs =
-        correctTabs1
+        lines
         |> Array.mapi( fun i x ->
             if skipNext <> 0 then 
                 skipNext <- skipNext - 1
@@ -53,6 +55,8 @@ let fixEyeTrackingFile (basePath:string) (subdir:string) (file:string) =
             | 1 -> 
                 //printfn "![%d] tabs: %d - %s" i tabs x
                 x + "\t\t\t\t\t\t\t\t\t\t\t\t"
+            | 9 ->
+                x + "\t\t\t\t"
             | 13 -> x
             | 14 ->
                 let t1 = Double.TryParse( toks.[0] )
@@ -68,8 +72,8 @@ let fixEyeTrackingFile (basePath:string) (subdir:string) (file:string) =
                         ""
                 else 
                     ""
-            | 10 -> 
-                
+            | 10 -> x
+                (*
                 let upTo8 = 
                     ("", fst (toks |> Array.splitAt 9) )
                     ||> Array.fold( fun acc el -> if acc <> "" then acc + "\t" + el else el )
@@ -88,8 +92,9 @@ let fixEyeTrackingFile (basePath:string) (subdir:string) (file:string) =
                     corr
                 else
                     x
-
-            | 8 -> 
+                    *)
+            | 8 -> x
+                (*
                 skipNext <- 1
                 let upTo6 = 
                     ("", fst (toks |> Array.splitAt 7 ) )
@@ -106,7 +111,7 @@ let fixEyeTrackingFile (basePath:string) (subdir:string) (file:string) =
                     corr
                 else
                     x
-
+                    *)
             | _ -> 
                 printfn "?[%d] tabs: %d - %s" i tabs x 
                 count <- count + 1
@@ -175,7 +180,6 @@ let fixEyeTOBIIOutput (baseDir) (subDirs) =
         
         try
             IO.Directory.GetFiles( path )
-
             |> Array.map( fun s -> 
                 let toks = s.Split('\\')
                 toks.[toks.Length-1] )  

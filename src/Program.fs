@@ -346,12 +346,12 @@ let main argv =
                     // TODO adjustable user input for subdirectories
                     let subdirs = 
                         [
-                            "Anti Arousal"
-                            "Anti Klassisch"
-                            "Anti Scramble"
-                            "Pro Arousal"
-                            "Pro Klassisch"
-                            "Pro Scramble"
+                            "Baseline"
+                            "Kennenlernen"
+                            //"Anti Scramble"
+                            //"Pro Arousal"
+                            //"Pro Klassisch"
+                            //"Pro Scramble"
                         ]
 
                     let ofd = new System.Windows.Forms.FolderBrowserDialog()
